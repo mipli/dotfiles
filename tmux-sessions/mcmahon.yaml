@@ -1,0 +1,16 @@
+session_name: mcmahon
+windows:
+  - window_name: Server Window
+    layout: even-horizontal
+    shell_command_before:
+      - source ~/.nvm/nvm.sh
+      - cd ~/code/mcmahon
+    panes:
+      - shell_command:
+        - cd api
+        - nvm use
+        - nodemon
+      - shell_command:
+        - cd frontend
+        - npm start
+
