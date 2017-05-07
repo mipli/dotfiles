@@ -403,9 +403,11 @@
     let g:SimpylFold_docstring_preview = 1
   augroup end
 "}}}
-"
-"
-"
-let g:slime_target = "tmux"
-let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.2"}
-let g:slime_python_ipython = 1
+
+" Tmux --------------------------------------{{{
+if (!empty($TMUX))
+  let g:slime_target = "tmux"
+  let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.1"}
+  let g:slime_python_ipython = 1
+endif
+"}}}

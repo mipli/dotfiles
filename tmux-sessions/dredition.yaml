@@ -1,6 +1,6 @@
 session_name: dredition
 windows:
-  - window_name: Editor Front
+  - window_name: Frontend
     focus: true
     layout: main-vertical
     shell_command_before:
@@ -9,6 +9,16 @@ windows:
     panes:
       - shell_command:
         - cd dredition-frontend
+        - v src
+
+  - window_name: API
+    layout: main-vertical
+    shell_command_before:
+      - source ~/.nvm/nvm.sh
+      - cd ~/code/aptoma/dre
+    panes:
+      - shell_command:
+        - cd api
         - v src
 
   - window_name: Server Window

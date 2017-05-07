@@ -20,3 +20,5 @@ alias vs='nvim -O'
 alias chrome="open google-chrome-unstable"
 
 alias ipy='ipython3'
+
+alias tml='tmuxp load'
