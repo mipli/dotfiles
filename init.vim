@@ -16,6 +16,7 @@
   call dein#add('mxw/vim-jsx')
   call dein#add('ianks/vim-tsx')
   call dein#add('jaawerth/nrun.vim')
+  call dein#add('posva/vim-vue')
 
   call dein#add('HerringtonDarkholme/yats.vim', {'on_ft': 'typescript'})
 

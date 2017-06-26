@@ -1,0 +1,20 @@
+session_name: mcmahon
+windows:
+  - window_name: Code
+    focus: true
+    layout: main-vertical
+    shell_command_before:
+      - source ~/code/wanderer/bin/activate
+      - cd ~/code/wanderer
+    panes:
+      - shell_command:
+        - v game.py
+
+  - window_name: Shell
+    layout: main-vertical
+    shell_command_before:
+      - source ~/code/wanderer/bin/activate
+      - cd ~/code/wanderer
+    panes:
+      - shell_command:
+        - ls
