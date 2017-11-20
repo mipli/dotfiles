@@ -68,6 +68,8 @@
   call dein#add('benmills/vimux')
   call dein#add('jpalardy/vim-slime')
 
+  call dein#add('rust-lang/rust.vim')
+
   " enable deoplete
   let g:deoplete#enable_at_startup = 1
 
