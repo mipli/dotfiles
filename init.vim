@@ -70,6 +70,8 @@
 
   call dein#add('rust-lang/rust.vim')
 
+  call dein#add('plasticboy/vim-markdown')
+
   " enable deoplete
   let g:deoplete#enable_at_startup = 1
 
@@ -195,7 +197,7 @@
   " highlight bad words in red
   autocmd FileType markdown,text,html hi SpellBad guibg=#ff2929 guifg=#ffffff" ctermbg=224
   " disable markdown auto-preview. Gets annoying
-  let g:instant_markdown_autostart = 0
+  let g:instant_markdown_autostart = 1
 
   " syntax highlight files based on folder
   autocmd BufRead,BufNewFile ~/.Xdefaults.d/* set filetype=xdefaults
