@@ -40,6 +40,7 @@ eval "$(pyenv init -)"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 [ -s "/home/michael/.scm_breeze/scm_breeze.sh" ] && source "/home/michael/.scm_breeze/scm_breeze.sh"
+[ -s "/home/michael/.pyenv/versions/3.6.0/bin/virtualenvwrapper.sh" ] && source "/home/michael/.pyenv/versions/3.6.0/bin/virtualenvwrapper.sh"
 
 mem() {
   ps -eo rss,pid,euser,args:100 --sort %mem | grep -v grep | grep -i $@ | awk '{total += $1; printf $1/1024 "MB"; $1=""; print } END { print "Total: " total/1024 "MB"}'
