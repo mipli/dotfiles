@@ -332,7 +332,7 @@
 
 
   nnoremap <silent> <leader>u :call dein#update()<CR>
-  nnoremap <silent> <leader>m :Denite -auto-resize -start-insert -direction=botright file_rec<CR>
+  nnoremap <silent> <leader>m :Denite -auto-resize -direction=botright file_rec<CR>
   nnoremap <silent> <leader>o :Denite outline<CR>
 "}}}
 
