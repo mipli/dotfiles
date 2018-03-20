@@ -1,0 +1,10 @@
+session_name: wisp
+windows:
+  - window_name: Editor
+    focus: true
+    layout: main-vertical
+    shell_command_before:
+      - cd ~/code/rust/wisp
+    panes:
+      - shell_command:
+        - cd .
