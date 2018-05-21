@@ -4,73 +4,41 @@
     call system(expand("git clone https://github.com/Shougo/dein.vim $HOME/.config/nvim/repos/github.com/Shougo/dein.vim"))
   endif
 
+  if &compatible
+    set nocompatible
+  endif
+
   set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
   call dein#begin(expand('~/.config/nvim'))
-
   call dein#add('Shougo/dein.vim')
-  call dein#add('ciaranm/detectindent')
 
-  call dein#add('othree/yajs.vim', {'on_ft': 'javascript'})
-  call dein#add('othree/jsdoc-syntax.vim', {'on_ft':['javascript', 'typescript']})
-  call dein#add('othree/es.next.syntax.vim', {'on_ft': 'javascript'})
-  call dein#add('mxw/vim-jsx')
-  call dein#add('ianks/vim-tsx')
-  call dein#add('jaawerth/nrun.vim')
-  call dein#add('posva/vim-vue')
+  " themes
+  call dein#add('morhetz/gruvbox')
 
-  call dein#add('HerringtonDarkholme/yats.vim', {'on_ft': 'typescript'})
-
-  call dein#add('moll/vim-node')
-
+  " airline
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
 
-  call dein#add('mattn/emmet-vim', {'on_ft': 'html'})
-  call dein#add('valloric/MatchTagAlways', {'on_ft': 'html'})
-
-  call dein#add('Shougo/deoplete.nvim')
-  " call dein#add('Shougo/unite.vim')
-  " call dein#add('Shougo/unite-outline')
-
   call dein#add('Shougo/denite.nvim')
-
-  call dein#add('mhartington/deoplete-typescript')
-  call dein#add('carlitux/deoplete-ternjs')
-
-  call dein#add('troydm/asyncfinder.vim')
-
-  call dein#add('Shougo/neomru.vim')
-
-  " call dein#add('ujihisa/unite-colorscheme')
-  " call dein#add('junkblocker/unite-codesearch')
-  " call dein#add('rafi/vim-unite-issue')
-
-  call dein#add('tpope/vim-fugitive')
-  call dein#add('tpope/vim-dispatch')
-
-  call dein#add('neomake/neomake')
+  call dein#add('Shougo/deoplete.nvim')
 
   call dein#add('editorconfig/editorconfig-vim')
-
-  call dein#add('nvie/vim-flake8')
-  call dein#add('zchee/deoplete-jedi')
-  call dein#add('davidhalter/jedi')
-  call dein#add('tmhedberg/SimpylFold')
-
-  call dein#add('OmniSharp/omnisharp-vim')
-  call dein#add('tpope/vim-dispatch')
-  call dein#add('radenling/vim-dispatch-neovim')
-
-  call dein#add('chrisbra/csv.vim')
-
-  call dein#add('bfredl/nvim-ipy')
 
   call dein#add('benmills/vimux')
   call dein#add('jpalardy/vim-slime')
 
+  call dein#add('autozimu/LanguageClient-neovim', { 'rev': 'next', 'build': 'bash install.sh', })
+
+  call dein#add('w0rp/ale')
+
+  " Rust 
   call dein#add('rust-lang/rust.vim')
 
-  call dein#add('plasticboy/vim-markdown')
+  " Javascript
+  call dein#add('pangloss/vim-javascript')
+
+  " PHP
+  call dein#add('roxma/LanguageServer-php-neovim',  { 'rev': 'master', 'build': 'composer install && composer run-script parse-stubs'})
 
   " enable deoplete
   let g:deoplete#enable_at_startup = 1
@@ -81,6 +49,7 @@
   endif
 
   call dein#end()
+  call dein#save_state()
   filetype plugin indent on
 " }}}
 
@@ -96,8 +65,10 @@
   set tabstop=2 shiftwidth=2 expandtab
   set conceallevel=0
   set scrolloff=10
-    
+
   set nowrap
+
+  set signcolumn=yes
 
   set virtualedit=
   set wildmenu
@@ -135,14 +106,11 @@
               \ endif
               " center buffer around cursor when opening files
   autocmd BufRead * normal zz
-  let g:jsx_ext_required =0
-  set complete=.,w,b,u,t,k
-  let g:gitgutter_max_signs = 1000  " default value
+  " set complete=.,w,b,u,t,k
+  let g:gitgutter_max_signs = 1001  " default value
   autocmd InsertEnter * let save_cwd = getcwd() | set autochdir
   autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
   let g:indentLine_char='│'
-
-  set mouse=a
 
   set splitbelow
   set splitright
@@ -162,7 +130,12 @@
   map <C-l> :bn<Cr>
   map <C-h> :bp<Cr>
 
-  nnoremap gb :ls<CR>:b<Space>
+
+
+  nmap <c-[> <esc>
+  imap <c-[> <esc>
+  vmap <c-[> <esc>
+  omap <c-[> <esc>
 
   " tab navigation 
   nnoremap <S-tab> :tabprev<CR>
@@ -187,9 +160,13 @@
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-  syntax on
+  syntax enable
+  " colorscheme
+  let g:gruvbox_contrast_dark="hard"
+  let g:gruvbox_contrast_light="hard"
   set background=dark
-  colorscheme lucius
+  colorscheme gruvbox
+
   " no need to fold things in markdown all the time
   let g:vim_markdown_folding_disabled = 1
   " turn on spelling for markdown files
@@ -231,21 +208,19 @@
   " Space to toggle folds.
   nnoremap <Space> za
   vnoremap <Space> za
+
   autocmd FileType vim setlocal foldmethod=marker
   autocmd FileType vim setlocal foldlevel=0
 
-  autocmd FileType html setlocal fdl=99
+  autocmd FileType html,css,scss setlocal foldlevel=99
+  autocmd FileType css,scss setlocal foldmethod=marker
+  autocmd FileType css,scss setlocal foldmarker={,}
 
-  autocmd FileType php,javascript,html,css,scss,typescript setlocal foldlevel=99
-  autocmd FileType php,css,scss,json setlocal foldmethod=marker
-  autocmd FileType php,css,scss,json setlocal foldmarker={,}
-
-  autocmd FileType coffee setl foldmethod=indent
   autocmd FileType html setl foldmethod=syntax
 
   autocmd FileType javascript,typescript,json setl foldmethod=syntax
-
-  autocmd FileType lua setlocal foldmethod=marker
+  autocmd FileType rust setl foldmethod=syntax
+  autocmd FileType php setl foldmethod=syntax
 " }}}
 
 " vim-airline ---------------------------------------------------------------{{{
@@ -254,8 +229,7 @@
   let g:airline#extensions#tabline#fnamemod = ':t'
   let g:airline#extensions#tabline#show_tab_nr = 1
   let g:airline_powerline_fonts = 1
-  let g:airline_theme='lucius'
-  " let g:airline_theme='base16_solarized'
+  let g:airline_theme='gruvbox'
   cnoreabbrev <expr> x getcmdtype() == ":" && getcmdline() == 'x' ? 'Sayonara' : 'x'
   tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
   nmap <leader>t :term<cr>
@@ -284,129 +258,90 @@
   nmap <leader>9 <Plug>AirlineSelectTab9
 "}}}
 
-" Emmet ---------------------------------------------------------------------{{{
-" Enable Emmet in all modes
-" Remapping <C-y>, just doesn't cut it.
-  function! s:expand_html_tab()
-" try to determine if we're within quotes or tags.
-" if so, assume we're in an emmet fill area.
-   let line = getline('.')
-   if col('.') < len(line)
-     let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
-     if len(line) >= 2
-        return "\<C-n>"
-     endif
-   endif
-" expand anything emmet thinks is expandable.
-  if emmet#isExpandable()
-    return "\<C-y>,"
-  endif
-" return a regular tab character
-  return "\<tab>"
-  endfunction
-
-  autocmd FileType html,markdown imap <buffer><expr><tab> <sid>expand_html_tab()
-  let g:user_emmet_mode='a'
-  let g:user_emmet_complete_tag = 0
-  let g:user_emmet_install_global = 0
-  autocmd FileType html,css EmmetInstall
-"}}}
-
 " Denite ---------------------------------------------------------------------{{{
+    " reset 50% winheight on window resize
+  augroup deniteresize
+    autocmd!
+    autocmd VimResized,VimEnter * call denite#custom#option('default',
+          \'winheight', winheight(0) / 2)
+  augroup end
 
-  call denite#custom#option('default', 'prompt', '>')
-  call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+  call denite#custom#option('default', {
+        \ 'prompt': '❯'
+        \ })
 
-  call denite#custom#map(
-      \ 'insert',
-      \ '<C-s>',
-      \ '<denite:move_to_next_line>',
-      \ 'noremap'
-      \)
-  call denite#custom#map(
-      \ 'insert',
-      \ '<C-w>',
-      \ '<denite:move_to_previous_line>',
-      \ 'noremap'
-      \)
+  call denite#custom#var('file_rec', 'command',
+        \ ['rg', '--files', '--glob', '!.git'])
+  call denite#custom#var('grep', 'command', ['rg'])
+  call denite#custom#var('grep', 'default_opts',
+        \ ['--hidden', '--vimgrep', '--no-heading', '-S'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
+  call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>',
+        \'noremap')
+  call denite#custom#map('normal', '<Esc>', '<NOP>',
+        \'noremap')
+  call denite#custom#map('normal', '<Esc>', '<NOP>',
+        \'noremap')
+  call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>',
+        \'noremap')
+  call denite#custom#map('normal', '<C-v>', '<denite:do_action:vsplit>',
+        \'noremap')
+  call denite#custom#map('insert', '<C-h>', '<denite:do_action:split>',
+        \'noremap')
+  call denite#custom#map('normal', '<C-h>', '<denite:do_action:split>',
+        \'noremap')
 
 
-  nnoremap <silent> <leader>u :call dein#update()<CR>
-  nnoremap <silent> <leader>m :Denite -auto-resize -direction=botright file_rec<CR>
-  nnoremap <silent> <leader>o :Denite outline<CR>
+  nnoremap <C-p> :<C-u>Denite file_rec<CR>
+  nnoremap <leader>s :<C-u>Denite buffer<CR>
+  nnoremap <leader><Space>s :<C-u>DeniteBufferDir buffer<CR>
+  nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
+  nnoremap <leader>/ :<C-u>Denite grep<CR>
+  nnoremap <leader><Space>/ :<C-u>DeniteBufferDir grep:. -mode=normal<CR>
+  nnoremap <leader>d :<C-u>DeniteBufferDir file_rec<CR>
+  nnoremap <leader>o :Denite outline<CR>
 "}}}
+
+" Deoplete -----------------------------------------------------{{{
+let g:deoplete#enable_at_startup=1
+let g:deoplete#auto_completion_start_length = 1
+let g:deoplete#auto_complete_delay = 50
+" }}}
+
+" Language Server Setup -----------------------------------------------------{{{
+" " Required for operations modifying multiple buffers like rename.
+"
+set hidden
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_changeThrottle = 0.5
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'php': ['php', expand('~/.config/nvim/repos/github.com/roxma/LanguageServer-php-neovim/vendor/felixfbecker/language-server/bin/php-language-server.php')]
+    \ }
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" }}}
+
+
+" Rust -------------------------------------------------------------------{{{
+"
+let g:autofmt_autosave = 1 
+" }}}
+
 
 " Linting -------------------------------------------------------------------{{{
-  function! EchoPWD()
-    echom getcwd()
-  endfunction
+let g:ale_sign_column_always = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_enter = 1
 
-  let g:neomake_javascript_enabled_makers = ['eslint']
-  function! neomake#makers#ft#javascript#eslint()
-      return {
-          \ 'args': ['-f', 'compact'],
-          \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
-          \ '%W%f: line %l\, col %c\, Warning - %m'
-          \ }
-  endfunction
-
-"          \ '-m', 'commonjs', '-t', 'es5', '--noEmit', '--experimentalDecorators', '--emitDecoratorMetadata'
-  function! neomake#makers#ft#typescript#tsc()
-      return {
-          \ 'args': [
-          \ '--project', getcwd()
-          \ ],
-          \ 'append_file': 0,
-          \ 'errorformat':
-              \ '%E%f %#(%l\,%c): error %m,' .
-              \ '%E%f %#(%l\,%c): %m,' .
-              \ '%Eerror %m,' .
-              \ '%C%\s%\+%m'
-          \ }
-  endfunction
-
-  " you can set your enabled makers globally (like below) or on the buffer level as part of an autocmd - see Neomake docs for details
-  let g:neomake_javascript_enabled_makers = ['eslint']
-  " when switching/opening a JS buffer, set neomake's eslint path, and enable it as a maker
-  autocmd BufEnter *.js let b:neomake_javascript_eslint_exe = nrun#Which('eslint')
-
-  autocmd! BufWritePost * Neomake
-"}}}
-
-" Typescript & Javscript omni complete --------------------------------------{{{
-
-  let g:tsuquyomi_disable_quickfix = 1
-  let g:vim_json_syntax_conceal = 0
-  set completeopt+=noselect
-  autocmd FileType typescript setlocal completeopt+=menu,preview
-  function! Multiple_cursors_before()
-    let b:deoplete_disable_auto_complete=1
-  endfunction
-  function! Multiple_cursors_after()
-    let b:deoplete_disable_auto_complete=0
-  endfunction
-  call deoplete#custom#set('buffer', 'mark', 'buffer')
-  call deoplete#custom#set('ternjs', 'mark', '')
-  call deoplete#custom#set('omni', 'mark', 'omni')
-  call deoplete#custom#set('file', 'mark', 'file')
-  let g:deoplete#omni_patterns = {}
-  let g:deoplete#omni_patterns.html = ''
-
-  let g:tern_request_timeout = 1
-  let g:tern_show_signature_in_pum = 0
-"}}}
-
-" Python --------------------------------------{{{
-  autocmd BufWritePost *.py call Flake8()
-  let g:jedi#use_tabs_not_buffers = 1
-  augroup python
-    autocmd!
-    autocmd FileType python setl sw=4 sts=4 et
-    autocmd FileType python
-                \   syn keyword pythonSelf self
-                \ | highlight def link pythonSelf Special
-    let g:SimpylFold_docstring_preview = 1
-  augroup end
+nmap <silent> <C-q> <Plug>(ale_next_wrap)
 "}}}
 
 " Tmux --------------------------------------{{{
@@ -416,3 +351,36 @@ if (!empty($TMUX))
   let g:slime_python_ipython = 1
 endif
 "}}}
+"
+
+  " call dein#add('plasticboy/vim-markdown')
+  " call dein#add('Shougo/deoplete.nvim')
+  " call dein#add('Shougo/unite.vim')
+  " call dein#add('Shougo/unite-outline')
+  "call dein#add('mhartington/deoplete-typescript')
+  "call dein#add('carlitux/deoplete-ternjs')
+
+  "call dein#add('Shougo/neomru.vim')
+
+  " call dein#add('ujihisa/unite-colorscheme')
+  " call dein#add('junkblocker/unite-codesearch')
+  " call dein#add('rafi/vim-unite-issue')
+
+  "call dein#add('tpope/vim-fugitive')
+  "call dein#add('tpope/vim-dispatch')
+
+  " call dein#add('neomake/neomake')
+
+  " call dein#add('nvie/vim-flake8')
+  " call dein#add('zchee/deoplete-jedi')
+  " call dein#add('davidhalter/jedi')
+  " call dein#add('tmhedberg/SimpylFold')
+
+  " call dein#add('OmniSharp/omnisharp-vim')
+  " call dein#add('tpope/vim-dispatch')
+  " call dein#add('radenling/vim-dispatch-neovim')
+
+  " call dein#add('chrisbra/csv.vim')
+
+  " call dein#add('bfredl/nvim-ipy')
+
