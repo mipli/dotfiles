@@ -17,4 +17,3 @@ fi
 
 alias v='exec_scmb_expand_args nvim'
 alias vs='nvim -O'
-alias chrome="open google-chrome"
