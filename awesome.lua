@@ -70,7 +70,7 @@ iptraf     = terminal .. " -g 180x54-20+34 -e sudo iptraf-ng -i all "
 
 -- Keyboard map indicator and changer
 kbdcfg = {}
-kbdcfg.cmd = "setxkbmap -option caps:escape"
+kbdcfg.cmd = "setxkbmap"
 kbdcfg.layout = { { "us", "" , "US" }, { "no", "" , "NO" } } 
 kbdcfg.current = 1  -- us is our default layout
 kbdcfg.widget = wibox.widget.textbox()
@@ -79,7 +79,7 @@ kbdcfg.switch = function ()
   kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
   local t = kbdcfg.layout[kbdcfg.current]
   kbdcfg.widget:set_text(" " .. t[3] .. " ")
-  os.execute( kbdcfg.cmd .. " " .. t[1] .. " " .. t[2] )
+  os.execute(kbdcfg.cmd .. " " .. t[1] .. " " .. t[2] .. " && bash /home/michael/.dotfiles/ctrl-escape.sh")
 end
 
  -- Mouse bindings
