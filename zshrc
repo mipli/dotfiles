@@ -4,7 +4,7 @@ ZSH_THEME="agnoster"
 
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(bgnotify capistrano vagrant z)
+plugins=(bgnotify capistrano vagrant z cargo)
 
 export DISABLE_AUTO_TITLE='true'
 
@@ -36,6 +36,8 @@ export PATH="$PYENV_ROOT/bin:$HOME/.local/bin:$PATH"
 eval "$(pyenv init -)"
 
 . ~/.dotfiles/zsh-syntax-highlighting
+
+# . ~/.dotfiles/ctrl-escape.sh
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
