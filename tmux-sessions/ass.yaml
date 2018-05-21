@@ -1,0 +1,25 @@
+session_name: ass
+windows:
+  - window_name: ass
+    focus: true
+    layout: main-vertical
+    shell_command_before:
+      - source ~/.nvm/nvm.sh
+      - cd ~/code/aptoma/ass
+    panes:
+      - shell_command:
+        - ls
+
+  - window_name: Server
+    layout: even-horizontal
+    shell_command_before:
+      - source ~/.nvm/nvm.sh
+      - cd ~/code/aptoma/ass
+    panes:
+      - shell_command:
+        - docker-compose up
+      - shell_command:
+        - sleep 20
+        - awslocal sqs create-queue --queue-name ass-local-resize-queue
+        - docker-compose restart resizer
+        - npm start
