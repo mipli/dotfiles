@@ -17,4 +17,4 @@ windows:
       - cd ~/code/aptoma/brokkr
     panes:
       - shell_command:
-        - sam local start-api --env-vars env-vars.json
+        - npm start
