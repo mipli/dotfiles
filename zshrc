@@ -4,7 +4,9 @@ ZSH_THEME="agnoster"
 
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(bgnotify capistrano vagrant z cargo)
+plugins=(bgnotify capistrano vagrant z cargo ssh-agent)
+
+zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 export DISABLE_AUTO_TITLE='true'
 
