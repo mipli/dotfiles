@@ -27,6 +27,7 @@ alias pcat="pygmentize -f terminal256 -O style=native -g"
 alias gs=' git status'
 alias gc=' git commit'
 alias gd=' git diff'
+alias ga=' git add'
 alias gps=' git push'
 alias gpsf=' git push --force'
 alias gpl=' git pull --rebase'

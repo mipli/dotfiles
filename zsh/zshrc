@@ -21,6 +21,7 @@ zplugin light lukechilds/zsh-nvm
 #
 setopt RM_STAR_WAIT
 
+source ~/.dotfiles/zsh/zsh-syntax-highlighting
 source ~/.dotfiles/zsh/aliases.zsh
 source ~/.dotfiles/zsh/completion.zsh
 
