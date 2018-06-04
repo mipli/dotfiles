@@ -17,4 +17,4 @@ windows:
       - cd ~/code/aptoma/brokkr
     panes:
       - shell_command:
-        - npm start
+        - nodemon
