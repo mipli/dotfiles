@@ -15,6 +15,9 @@
   " themes
   call dein#add('morhetz/gruvbox')
 
+  " git
+  call dein#add('tpope/vim-fugitive')
+
   " airline
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
