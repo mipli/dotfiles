@@ -1,0 +1,40 @@
+# {{{ Zplugin
+### Added by Zplugin's installer
+source '/home/michael/.zplugin/bin/zplugin.zsh'
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin's installer chunk
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+zplugin ice pick"async.zsh" src"pure.zsh"; zplugin light sindresorhus/pure
+
+zplugin light urbainvaes/fzf-marks
+
+# zplugin light zsh-users/zsh-autosuggestions
+zplugin light zsh-users/zsh-syntax-highlighting
+
+# }}}
+#
+setopt RM_STAR_WAIT
+
+source ~/.dotfiles/zsh/aliases.zsh
+source ~/.dotfiles/zsh/completion.zsh
+
+export NVM_DIR="/home/michael/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# {{{ Python
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$HOME/.local/bin:$PATH"
+eval "$(pyenv init -)"
+
+[ -s "/home/michael/.pyenv/versions/3.6.0/bin/virtualenvwrapper.sh" ] && source "/home/michael/.pyenv/versions/3.6.0/bin/virtualenvwrapper.sh"
+# }}}
+
+export PATH="$PATH:$HOME/.rvm/bin"
+
+mem() {
+  ps -eo rss,pid,euser,args:100 --sort %mem | grep -v grep | grep -i $@ | awk '{total += $1; printf $1/1024 "MB"; $1=""; print } END { print "Total: " total/1024 "MB"}'
+}
+

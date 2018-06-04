@@ -15,9 +15,18 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-alias v='exec_scmb_expand_args nvim'
+alias v='nvim'
 alias vs='nvim -O'
 
 alias ipy='ipython3'
 
 alias tml='tmuxp load'
+
+alias pcat="pygmentize -f terminal256 -O style=native -g"
+
+alias gs=' git status'
+alias gps=' git push'
+alias gpsf=' git push --force'
+alias gpl=' git pull --rebase'
+alias gwc=' git whatchanged'
+alias gl=" git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
