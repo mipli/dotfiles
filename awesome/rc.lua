@@ -64,7 +64,7 @@ run_once("unclutter -root")
 beautiful.init("/home/michael/.config/awesome/theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
+terminal = "alacritty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -203,6 +203,14 @@ local mem = lain.widget.mem({
 mytextclock = wibox.widget.textclock()
 -- }}}
 
+-- {{{ ALSA volume
+volumewidget = lain.widget.alsa({
+    settings = function()
+        widget:set_markup(lain.util.markup.font(beautiful.font, lain.util.markup("#94928F", " Vol ") .. volume_now.level .. " "))
+    end
+  })
+-- }}}
+
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -268,6 +276,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
+            volumewidget,
             wibox.widget.systray(),
             mem.widget,
             cpu.widget,
@@ -409,11 +418,28 @@ globalkeys = gears.table.join(
                   end
               end,
               {description = "restore minimized", group = "client"}),
+     -- ALSA volume control
+    awful.key({ }, "XF86AudioRaiseVolume",
+        function ()
+            os.execute("pactl set-sink-volume 0 +1%")
+            volumewidget.update()
+        end),
+    awful.key({ }, "XF86AudioLowerVolume",
+        function ()
+            os.execute("pactl set-sink-volume 0 -1%")
+            volumewidget.update()
+        end),
+    awful.key({ }, "XF86AudioMute",
+        function ()
+            os.execute("pactl set-sink-mute 0 toggle")
+            volumewidget.update()
+        end),
+
 
     -- Prompt
     -- rofi
-    awful.key({ modkey, }, "r", function () os.execute("rofi -show run") end),
-    awful.key({ modkey, }, "w", function () os.execute("rofi -show window") end),
+    awful.key({ modkey, }, "r", function () os.execute("rofi -show run ") end),
+    awful.key({ modkey, }, "w", function () os.execute("rofi -show window ") end),
 
     -- awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
               -- {description = "run prompt", group = "launcher"}),
@@ -570,7 +596,10 @@ awful.rules.rules = {
       }, properties = { floating = true }},
 
     -- Give Spotify titlebar
-    { rule = { class = "Spotify" }, properties = { titlebars_enabled = true } }
+    { rule = { class = "Spotify" }, properties = { titlebars_enabled = true } },
+
+    -- Ignore size hints for urxvt
+    { rule = { }, properties = { size_hints_honor = false } }
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
