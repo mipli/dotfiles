@@ -1,0 +1,38 @@
+session_name: layoutpreview
+windows:
+  - window_name: Frontend
+    focus: true
+    layout: main-vertical
+    shell_command_before:
+      - source ~/.nvm/nvm.sh
+      - cd ~/code/aptoma/layoutpreview
+    panes:
+      - shell_command:
+        - cd frontend
+
+  - window_name: API
+    layout: main-vertical
+    shell_command_before:
+      - source ~/.nvm/nvm.sh
+      - cd ~/code/aptoma/layoutpreview
+    panes:
+      - shell_command:
+        - cd api
+
+  - window_name: Server Window
+    layout: even-horizontal
+    shell_command_before:
+      - source ~/.nvm/nvm.sh
+      - cd ~/code/aptoma/layoutpreview
+    panes:
+      - shell_command:
+        - cd api
+        - nvm use 
+        - nodemon | pretty-hapi-log
+      - shell_command:
+        - cd frontend
+        - tail -f app/log/app.log
+      - shell_command:
+        - cd frontend
+        - npm run webpack:watch
+

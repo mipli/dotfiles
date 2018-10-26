@@ -23,3 +23,12 @@ windows:
         - awslocal sqs create-queue --queue-name ass-local-resize-queue
         - docker-compose restart resizer
         - npm start
+
+  - window_name: ngrok
+    focus: true
+    layout: main-vertical
+    shell_command_before:
+      - cd ~/code/aptoma/ass
+    panes:
+      - shell_command:
+        - ngrok http 3000

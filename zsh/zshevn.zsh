@@ -8,6 +8,7 @@ export BROWSER='firefox'
 
 export HISTSIZE=32768;
 export HISTFILESIZE=$HISTSIZE;
+export HISTFILE="~/.zsh_history"
 export HISTCONTROL=ignoredups;
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help";
 

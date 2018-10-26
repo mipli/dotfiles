@@ -157,6 +157,9 @@
   map <Leader>vl :VimuxRunLastCommand<CR>
   map <Leader>vz :VimuxZoomRunner<CR>
 
+  " dp/do to get/put buffer when using :Gdiff
+  autocmd BufRead fugitive\:* xnoremap <buffer> dp :diffput<cr>|xnoremap <buffer> do :diffget<cr>
+
 " }}}
 
 " Themes --------------------------------------------------------------------{{{
@@ -321,7 +324,7 @@ set hidden
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_changeThrottle = 0.5
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'rust': ['rustup', 'run', 'beta', 'rls'],
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'php': ['php', expand('~/.config/nvim/repos/github.com/roxma/LanguageServer-php-neovim/vendor/felixfbecker/language-server/bin/php-language-server.php')]
     \ }
@@ -335,6 +338,7 @@ nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 " Rust -------------------------------------------------------------------{{{
 "
 let g:autofmt_autosave = 1 
+"
 " }}}
 
 
@@ -343,6 +347,10 @@ let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 1
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
 
 nmap <silent> <C-q> <Plug>(ale_next_wrap)
 "}}}
