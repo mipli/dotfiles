@@ -30,6 +30,8 @@
   call dein#add('benmills/vimux')
   call dein#add('jpalardy/vim-slime')
 
+  call dein#add('majutsushi/tagbar')
+
   call dein#add('autozimu/LanguageClient-neovim', { 'rev': 'next', 'build': 'bash install.sh', })
 
   call dein#add('w0rp/ale')
@@ -42,6 +44,8 @@
 
   " PHP
   call dein#add('roxma/LanguageServer-php-neovim',  { 'rev': 'master', 'build': 'composer install && composer run-script parse-stubs'})
+
+  cal dein#add('ryanoasis/vim-devicons')
 
   " enable deoplete
   let g:deoplete#enable_at_startup = 1
@@ -68,6 +72,8 @@
   set tabstop=2 shiftwidth=2 expandtab
   set conceallevel=0
   set scrolloff=10
+
+  set synmaxcol=800
 
   set nowrap
 
@@ -316,6 +322,24 @@ let g:deoplete#enable_at_startup=1
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#auto_complete_delay = 50
 " }}}
+"
+" Tagbar -----------------------------------------------------{{{
+nmap <F8> :TagbarToggle<CR>
+
+let g:tagbar_type_rust = {
+      \ 'ctagstype' : 'rust',
+      \ 'kinds' : [
+      \'T:types,type definitions',
+      \'f:functions,function definitions',
+      \'g:enum,enumeration names',
+      \'s:structure names',
+      \'m:modules,module names',
+      \'c:consts,static constants',
+      \'t:traits',
+      \'i:impls,trait implementations',
+      \]
+      \}
+" }}}
 
 " Language Server Setup -----------------------------------------------------{{{
 " " Required for operations modifying multiple buffers like rename.
@@ -324,7 +348,7 @@ set hidden
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_changeThrottle = 0.5
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'beta', 'rls'],
+    \ 'rust': ['~/.cargoe/bin/rustup', 'run', 'stable', 'rls'],
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'php': ['php', expand('~/.config/nvim/repos/github.com/roxma/LanguageServer-php-neovim/vendor/felixfbecker/language-server/bin/php-language-server.php')]
     \ }
