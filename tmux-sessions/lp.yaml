@@ -28,11 +28,13 @@ windows:
       - shell_command:
         - cd api
         - nvm use 
+        - sleep 120
         - nodemon | pretty-hapi-log
       - shell_command:
         - cd frontend
         - tail -f app/log/app.log
       - shell_command:
         - cd frontend
+        - vagrant up
         - npm run webpack:watch
 
