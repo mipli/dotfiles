@@ -1,7 +1,6 @@
-alias ll=' ls -alF'
-alias la=' ls -A'
-alias l=' ls -CF'
-alias lt=' ls -alFt'
+alias ll=' exa -lF'
+alias la=' exa -GFa'
+alias l=' exa -GF'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
