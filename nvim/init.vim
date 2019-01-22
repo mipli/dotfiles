@@ -99,6 +99,7 @@ endif
 " }}}
 
 " System setup  -------------------------------------------------------------{{{
+"
   set clipboard+=unnamedplus
   set pastetoggle=<f6>
   set nopaste
