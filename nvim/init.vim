@@ -38,6 +38,12 @@ if dein#load_state('/home/michael/.cache/dein')
 
   call dein#add('benmills/vimux')
 
+  call dein#add('junegunn/goyo.vim')
+
+  call dein#add('ron-rs/ron.vim')
+
+  call dein#add('dbeniamine/todo.txt-vim')
+
   call dein#end()
   call dein#save_state()
 endif
@@ -95,6 +101,9 @@ endif
 
   " dp/do to get/put buffer when using :Gdiff
   autocmd BufRead fugitive\:* xnoremap <buffer> dp :diffput<cr>|xnoremap <buffer> do :diffget<cr>
+
+  " Goyo toggle
+  nnoremap <silent><leader>vv :Goyo<cr>:set linebreak<cr>:set wrap<cr>
 
 " }}}
 
