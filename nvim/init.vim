@@ -13,26 +13,20 @@ if dein#load_state('/home/michael/.cache/dein')
   call dein#add('morhetz/gruvbox')
 
   call dein#add('Shougo/denite.nvim')
-  call dein#add('Shougo/deoplete.nvim')
 
-  " call dein#add('tpope/vim-fugitive')
+  call dein#add('neoclide/coc.nvim', {'merge':0, 'build': './install.sh nightly'})
+
+  call dein#add('w0rp/ale')
 
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
 
   call dein#add('sgur/vim-editorconfig')
 
-  call dein#add('tpope/vim-fugitive')
-
   call dein#add('majutsushi/tagbar')
+
+  call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
-
-  call dein#add('w0rp/ale')
-
-  call dein#add('autozimu/LanguageClient-neovim', {
-        \ 'rev': 'next',
-        \ 'build': 'bash install.sh',
-        \ })
 
   call dein#add('othree/yajs.vim')
 
@@ -104,6 +98,49 @@ endif
 
   " Goyo toggle
   nnoremap <silent><leader>vv :Goyo<cr>:set linebreak<cr>:set wrap<cr>
+
+  " CoC mappings
+  
+  " Use tab for trigger completion with characters ahead and navigate.
+  " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  " Use <c-space> for trigger completion.
+  inoremap <silent><expr> <c-space> coc#refresh()
+
+  " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+  " Coc only does snippet and additional edit on confirm.
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+  " Use `[c` and `]c` for navigate diagnostics
+  nmap <silent> [c <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+  " Remap keys for gotos
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+
+  " Use K for show documentation in preview window
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+  function! s:show_documentation()
+    if &filetype == 'vim'
+      execute 'h '.expand('<cword>')
+    else
+      call CocAction('doHover')
+    endif
+  endfunction
 
 " }}}
 
@@ -294,36 +331,6 @@ let g:tagbar_type_rust = {
       \}
 " }}}
 
-" Deoplete -----------------------------------------------------{{{
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-
-let b:deoplete_disable_auto_complete=1
-let g:deoplete_disable_auto_complete=1
-
-call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)
-
-if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
-endif
-
-" Disable the candidates in Comment/String syntaxes.
-call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-call deoplete#custom#option('sources', {
-            \ 'javascript': ['LanguageClient'],
-            \ 'rust': ['LanguageClient'],
-            \ 'vim': ['vim'],
-            \})
-
-" ignored sources
-let g:deoplete#ignore_sources = {}
-let g:deoplete#ignore_sources._ = ['buffer', 'around']
-
-" }}}
-
 " Denite ---------------------------------------------------------------------{{{
     " reset 50% winheight on window resize
   augroup deniteresize
@@ -379,30 +386,3 @@ let g:ale_linters = {
 
 nmap <silent> <C-q> <Plug>(ale_next_wrap)
 "}}}
-
-" Language Server Setup -----------------------------------------------------{{{
-" " Required for operations modifying multiple buffers like rename.
-"
-set hidden
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_changeThrottle = 0.5
-let g:LanguageClient_serverCommands = {
-      \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-      \ 'javascript': ['javascript-typescript-stdio'],
-      \ }
-let g:LanguageClient_rootMarkers = {
-      \ 'rust': ['Cargo.toml'],
-      \ 'javascript': ['package.json'],
-      \ }
-
-set completefunc=LanguageClient#complete
-set formatexpr=LanguageClient_textDocument_rangeFormatting()
-
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <silent> gf :call LanguageClient_textDocument_codeAction()<CR>
-
-" }}}
