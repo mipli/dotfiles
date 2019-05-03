@@ -11,6 +11,7 @@ if dein#load_state('/home/michael/.cache/dein')
   call dein#add('/home/michael/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   call dein#add('morhetz/gruvbox')
+  call dein#add('drewtempelmeyer/palenight.vim')
 
   call dein#add('Shougo/denite.nvim')
 
@@ -147,8 +148,6 @@ endif
 " System setup  -------------------------------------------------------------{{{
 "
   set clipboard+=unnamedplus
-  set pastetoggle=<f6>
-  set nopaste
 
   set noshowmode
   set noswapfile
@@ -218,10 +217,16 @@ endif
 
   syntax enable
   " colorscheme
-  let g:gruvbox_contrast_dark="hard"
-  let g:gruvbox_contrast_light="hard"
+  set termguicolors
+
+  " let g:gruvbox_contrast_dark="hard"
+  " let g:gruvbox_contrast_light="hard"
+  " set background=dark
+  " colorscheme gruvbox
+  
   set background=dark
-  colorscheme gruvbox
+  colorscheme palenight
+  let g:palenight_terminal_italics=1
 
   " no need to fold things in markdown all the time
   let g:vim_markdown_folding_disabled = 1
@@ -241,7 +246,8 @@ endif
   let g:airline#extensions#tabline#fnamemod = ':t'
   let g:airline#extensions#tabline#show_tab_nr = 1
   let g:airline_powerline_fonts = 1
-  let g:airline_theme='gruvbox'
+  "let g:airline_theme='gruvbox'
+  let g:airline_theme='onedark'
   cnoreabbrev <expr> x getcmdtype() == ":" && getcmdline() == 'x' ? 'Sayonara' : 'x'
   tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
   nmap <leader>t :term<cr>
