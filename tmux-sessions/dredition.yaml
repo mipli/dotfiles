@@ -30,13 +30,16 @@ windows:
       - shell_command:
         - cd dredition-api
         - nvm use 
-        - nodemon | pretty-hapi-log
-      - shell_command:
-        - cd squid
-        - nvm use 
+        - source /home/michael/code/aptoma/dre/start-mongo.sh
         - nodemon | pretty-hapi-log
       - shell_command:
         - cd dredition-frontend
         - nvm use 
         - npm start
+      - shell_command:
+        - cd dre-streams
+        - nvm use 
+        - sleep 60
+        - npm start
+
 
