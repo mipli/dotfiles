@@ -1,18 +1,9 @@
-alias ll=' exa -lF'
-alias la=' exa -GFa'
-alias l=' exa -GF'
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+alias l=' exa -lF --icons'
+alias ll=' exa -lF --icons'
+alias ls=' exa -lGF --icons'
+alias la=' exa -GFa --icons'
+alias lla=' exa -lFag --icons'
+alias lt=' exa --tree --icons'
 
 alias v='nvim'
 alias vs='nvim -O'
@@ -33,3 +24,43 @@ alias gpsf=' git push --force'
 alias gpl=' git pull --rebase'
 alias gwc=' git whatchanged'
 alias gl=" git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+
+gprune() {
+  if [[ $1 != "--run" ]]; then
+    git branch --merged=master | rg -v "master|develop"
+  else
+    git branch -d $(git branch --merged=master | rg -v "master|develop")
+  fi
+}
+
+alias onelogin='eval $(op signin aptoma)'
+
+oneitem() {
+  op get item $1 | jq '{uuid, title: .overview.title, details, tags: .overview.tags}'
+}
+
+onesearch() {
+  op list items | jq '.[] | {uuid, title: .overview.title, tags: .overview.tags} | select(.title | contains ("'$1'"))'
+}
+
+onetag() {
+  op list items | jq '.[] | {uuid, title: .overview.title, tags: .overview.tags} | select(.tags | index("'$1'"))'
+}
+
+plog() {
+  PROG=$1
+  shift
+  if [[ $PROG == "brokkr-prod" ]]; then 
+    papertrail -g 'Docker Cluster - Production' program:brokkr $@
+  elif [[ $PROG == "brokkr-dev" ]]; then
+    papertrail -g 'Docker Cluster - Development' program:brokkr $@
+  elif [[ $PROG == "docker-prod" ]]; then
+    papertrail -g 'Docker Cluster - Production' $@
+  else
+    echo "Supports 'brokkr-dev', 'brokkr-prod', 'docker-prod'"
+  fi
+}
+
+mem() {
+  ps -eo rss,pid,euser,args:100 --sort %mem | grep -v grep | grep -i $@ | awk '{total += $1; printf $1/1024 "MB"; $1=""; print } END { print "Total: " total/1024 "MB"}'
+}
