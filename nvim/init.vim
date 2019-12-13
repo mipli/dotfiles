@@ -39,6 +39,10 @@ if dein#load_state('/home/michael/.cache/dein')
 
   call dein#add('dbeniamine/todo.txt-vim')
 
+  call dein#add('leafOfTree/vim-vue-plugin')
+
+  call dein#add('glacambre/firenvim')
+
   call dein#end()
   call dein#save_state()
 endif
