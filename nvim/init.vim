@@ -10,12 +10,11 @@ if dein#load_state('/home/michael/.cache/dein')
 
   call dein#add('/home/michael/.cache/dein/repos/github.com/Shougo/dein.vim')
 
-  call dein#add('morhetz/gruvbox')
-  call dein#add('drewtempelmeyer/palenight.vim')
-
   call dein#add('Shougo/denite.nvim')
 
   call dein#add('neoclide/coc.nvim', {'merge':0, 'build': './install.sh nightly'})
+
+  let g:coc_node_path = '.nvm/versions/node/v13.5.0/bin/node'
 
   call dein#add('w0rp/ale')
 
@@ -42,6 +41,8 @@ if dein#load_state('/home/michael/.cache/dein')
   call dein#add('leafOfTree/vim-vue-plugin')
 
   call dein#add('glacambre/firenvim')
+
+  call dein#add('arcticicestudio/nord-vim')
 
   call dein#end()
   call dein#save_state()
@@ -221,7 +222,7 @@ endif
 
   syntax enable
   " colorscheme
-  set termguicolors
+  " set termguicolors
 
   " let g:gruvbox_contrast_dark="hard"
   " let g:gruvbox_contrast_light="hard"
@@ -229,8 +230,7 @@ endif
   " colorscheme gruvbox
   
   set background=dark
-  colorscheme palenight
-  let g:palenight_terminal_italics=1
+  colorscheme nord
 
   " no need to fold things in markdown all the time
   let g:vim_markdown_folding_disabled = 1
