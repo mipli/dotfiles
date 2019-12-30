@@ -44,6 +44,9 @@ keys = [
     Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute 0 toggle")),
     Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume 0 +1%")),
     Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume 0 -1%")),
+
+    #Change keyboard layout
+    Key([mod], "space", lazy.spawn("/home/michael/.dotfiles/qtile/keyboard-layout.sh")),
 ]
 
 
@@ -72,7 +75,7 @@ layouts = [
 widget_defaults = dict(
     font='Cascadia Code',
     fontsize=14,
-    padding=3,
+    padding=1,
 )
 extension_defaults = widget_defaults.copy()
 
@@ -102,7 +105,7 @@ screens = [
                 widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
                 widget.KeyboardLayout(background="2e3440", foreground="8fbcbb", padding=4),
                 widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
-                widget.Volume(background="2e3440", foreground="8fbcbb", padding=4, get_volume_command="/home/michael/bin/get-volume"),
+                widget.Volume(background="2e3440", foreground="8fbcbb", padding=4, update_interval=1),
                 widget.CPUGraph(background="2e3440", graph_color="8fbcbb", padding=4),
                 widget.MemoryGraph(background="2e3440", graph_color="8fbcbb", padding=4),
                 widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
@@ -154,7 +157,7 @@ wmname = "LG3D"
 
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser('~/.config/qtile/autostart.sh')
+    home = os.path.expanduser('/home/michael/.dotfiles/qtile/autostart.sh')
     subprocess.call([home])
 
 
