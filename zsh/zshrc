@@ -18,7 +18,6 @@ source ~/.dotfiles/zsh/pure/pure.zsh
 zplugin light urbainvaes/fzf-marks
 
 zplugin light zsh-users/zsh-autosuggestions
-zplugin light zsh-users/zsh-syntax-highlighting
 
 export NVM_LAZY_LOAD=true
 zplugin light lukechilds/zsh-nvm
@@ -103,3 +102,6 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
+
+## MUST BE AT END
+zplugin light zsh-users/zsh-syntax-highlighting
