@@ -21,6 +21,12 @@
     # Markup is allowed
     format = "<b>%a:</b> %s\n%b"
 
+
+    icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/
+    icon_position = left
+    max_icon_size = 32
+
+
     # Sort messages by urgency
     sort = yes
 
@@ -117,8 +123,8 @@
     # automatically after a crash.
     startup_notification = true
 
-    frame_width = 0
-    frame_color = "#000000"
+    frame_width = 1
+    frame_color = "#D8DEE9"
 
     # dmenu path
     dmenu = /usr/bin/dmenu -p dunst:
