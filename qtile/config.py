@@ -7,10 +7,28 @@ import cairocffi
 from xdg.IconTheme import getIconPath
 from libqtile.config import Key, Screen, Group, Match, Drag, Click
 from libqtile.command import lazy
-from libqtile import layout, bar, widget, hook
+from libqtile import layout, bar, widget, hook, extension
 from libqtile.widget import Spacer, base
 
 from typing import List  # noqa: F401
+
+from Xlib import display
+
+d = display.Display()
+s = d.screen()
+r = s.root
+res = r.xrandr_get_screen_resources()._data
+
+# Dynamic multiscreen! (Thanks XRandr)
+num_screens = 0
+for output in res['outputs']:
+    print("Output %d:" % (output))
+    mon = d.xrandr_get_output_info(output, res['config_timestamp'])._data
+    print("%s: %d" % (mon['name'], mon['num_preferred']))
+    if mon['num_preferred']:
+        num_screens += 1
+
+print("Screens found: %d" % (num_screens))
 
 mod = "mod4"
 
@@ -31,6 +49,9 @@ keys = [
     Key([mod], "f", lazy.window.toggle_fullscreen()),
 
     Key([mod], "Return", lazy.spawn("alacritty")),
+
+    Key([mod, "control"], "h", lazy.prev_screen()),
+    Key([mod, "control"], "h", lazy.next_screen()),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout()),
@@ -79,44 +100,46 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.GroupBox(background = "2e3440", active = "5e81ac", inactive = "b48ead",
-                                this_current_screen_border = "bf616a", highlight_method = "line", highlight_color=["2e3440", "2e3440"], center_aligned=True,),
-                # widget.Prompt(background = "2e3440"),
-                widget.Sep(background = "2e3440",),
-                widget.TaskList(background = "2e3440", foreground = "2e3440", border = "5e81ac",
-                                unfocused_border = "b48ead", highlight_method = "block", max_title_width=100, title_width_method="uniform", rounded=False,),
-                widget.Systray(background = "2e3440"),
-                widget.TextBox(text='☇', background="2e3440", foreground="8fbcbb", padding=2),
-                widget.Battery(energy_now_file = "charge_now",
-                    energy_full_file = "charge_full",
-                    power_now_file = "current_now",
-                    update_delay = 5,
-                    background = "2e3440",
-                    foreground = "8fbcbb",
-                    format = "{char} {percent:2.0%}",
-                    full_char = u'',
-                    unknown_char = u'',
-                    charge_char = u'↑',
-                    discharge_char = u'↓',),
-                widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
-                widget.KeyboardLayout(background="2e3440", foreground="8fbcbb", padding=4),
-                widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
-                widget.Volume(background="2e3440", foreground="8fbcbb", padding=4, update_interval=1),
-                widget.CPUGraph(background="2e3440", graph_color="8fbcbb", padding=4),
-                widget.MemoryGraph(background="2e3440", graph_color="8fbcbb", padding=4),
-                widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
-                widget.Clock(format='%a %H:%M', background = "2e3440", foreground = "8fbcbb", pading=4),
-                widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
-                widget.Wlan(background="2e3440", foreground="8fbcbb", padding=4, interface="wlan0", format="{essid}"),
-            ],
-            24,
+screens = []
+for screen in range(0, num_screens):
+    screens.append(
+        Screen(
+            top=bar.Bar(
+                [
+                    widget.GroupBox(background = "2e3440", active = "5e81ac", inactive = "b48ead",
+                                    this_current_screen_border = "bf616a", highlight_method = "line", highlight_color=["2e3440", "2e3440"], center_aligned=True,),
+                    # widget.Prompt(background = "2e3440"),
+                    widget.Sep(background = "2e3440",),
+                    widget.TaskList(background = "2e3440", foreground = "2e3440", border = "5e81ac",
+                                    unfocused_border = "b48ead", highlight_method = "block", max_title_width=100, title_width_method="uniform", rounded=False,),
+                    widget.Systray(background = "2e3440"),
+                    widget.TextBox(text='☇', background="2e3440", foreground="8fbcbb", padding=2),
+                    widget.Battery(energy_now_file = "charge_now",
+                        energy_full_file = "charge_full",
+                        power_now_file = "current_now",
+                        update_delay = 5,
+                        background = "2e3440",
+                        foreground = "8fbcbb",
+                        format = "{char} {percent:2.0%}",
+                        full_char = u'',
+                        unknown_char = u'',
+                        charge_char = u'↑',
+                        discharge_char = u'↓',),
+                    widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
+                    widget.KeyboardLayout(background="2e3440", foreground="8fbcbb", padding=4),
+                    widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
+                    widget.Volume(background="2e3440", foreground="8fbcbb", padding=4, update_interval=1),
+                    widget.CPUGraph(background="2e3440", graph_color="8fbcbb", padding=4),
+                    widget.MemoryGraph(background="2e3440", graph_color="8fbcbb", padding=4),
+                    widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
+                    widget.Clock(format='%a %H:%M', background = "2e3440", foreground = "8fbcbb", pading=4),
+                    widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
+                    widget.Wlan(background="2e3440", foreground="8fbcbb", padding=4, interface="wlan0", format="{essid}"),
+                ],
+                24,
+            ),
         ),
-    ),
-]
+    )
 
 # Drag floating layouts.
 mouse = [
