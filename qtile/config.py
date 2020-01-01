@@ -14,21 +14,25 @@ from typing import List  # noqa: F401
 
 from Xlib import display
 
-d = display.Display()
-s = d.screen()
-r = s.root
-res = r.xrandr_get_screen_resources()._data
 
-# Dynamic multiscreen! (Thanks XRandr)
-num_screens = 0
-for output in res['outputs']:
-    print("Output %d:" % (output))
-    mon = d.xrandr_get_output_info(output, res['config_timestamp'])._data
-    print("%s: %d" % (mon['name'], mon['num_preferred']))
-    if mon['num_preferred']:
-        num_screens += 1
+def get_screen_count():
+    d = display.Display()
+    s = d.screen()
+    r = s.root
+    res = r.xrandr_get_screen_resources()._data
 
-print("Screens found: %d" % (num_screens))
+    num_screens = 0
+    for output in res['outputs']:
+        print("Output %d:" % (output))
+        mon = d.xrandr_get_output_info(output, res['config_timestamp'])._data
+        print("%s: %d" % (mon['name'], mon['num_preferred']))
+        if mon['num_preferred']:
+            num_screens += 1
+
+    print("Screens found: %d" % (num_screens))
+    return num_screens
+
+num_screens = get_screen_count()
 
 mod = "mod4"
 
@@ -51,7 +55,7 @@ keys = [
     Key([mod], "Return", lazy.spawn("alacritty")),
 
     Key([mod, "control"], "h", lazy.prev_screen()),
-    Key([mod, "control"], "h", lazy.next_screen()),
+    Key([mod, "control"], "l", lazy.next_screen()),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout()),
@@ -180,8 +184,5 @@ wmname = "LG3D"
 
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser('/home/michael/.dotfiles/qtile/autostart.sh')
+    home = os.path.expanduser('~/.dotfiles/qtile/autostart.sh')
     subprocess.call([home])
-
-
-
