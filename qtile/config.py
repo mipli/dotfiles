@@ -76,11 +76,15 @@ keys = [
 
 
 groups = [
-    Group("1", matches=[Match(wm_class=["firefox"])], label=""),
-    Group("2", label=""),
-    Group("3", label=""),
-    Group("4", label=""),
-    Group("5", label=""),
+    Group("1", label="1"),
+    Group("2", label="2"),
+    Group("3", label="3"),
+    Group("4", label="4"),
+    Group("5", label="5"),
+    Group("6", label="6"),
+    Group("7", label="7"),
+    Group("8", label="8"),
+    Group("9", label="9"),
     ]
 
 for i in groups:
@@ -93,8 +97,8 @@ for i in groups:
     ])
 
 layouts = [
-    layout.MonadTall(border_focus = "5e81ac", border_normal = "b48ead", border_width = 3, margin = 5,),
-    layout.MonadWide(border_focus = "5e81ac", border_normal = "b48ead", border_width = 3, margin = 5,),
+    layout.MonadTall(border_focus = "a3be8c", border_normal = "5e81ac", border_width = 2, margin = 3,),
+    layout.MonadWide(border_focus = "a3be8c", border_normal = "5e81ac", border_width = 2, margin = 3,),
 ]
 
 widget_defaults = dict(
@@ -111,7 +115,7 @@ for screen in range(0, num_screens):
             top=bar.Bar(
                 [
                     widget.GroupBox(background = "2e3440", active = "5e81ac", inactive = "b48ead",
-                                    this_current_screen_border = "bf616a", highlight_method = "line", highlight_color=["2e3440", "2e3440"], center_aligned=True,),
+                                    this_current_screen_border = "d08770", highlight_method = "line", highlight_color=["2e3440", "2e3440"], other_screen_border="eceff4", other_current_screen_border="eceff4", this_screen_border="81a1c1", center_aligned=True,),
                     # widget.Prompt(background = "2e3440"),
                     widget.Sep(background = "2e3440",),
                     widget.TaskList(background = "2e3440", foreground = "2e3440", border = "5e81ac",
@@ -132,13 +136,13 @@ for screen in range(0, num_screens):
                     widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
                     widget.KeyboardLayout(background="2e3440", foreground="8fbcbb", padding=4),
                     widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
-                    widget.Volume(background="2e3440", foreground="8fbcbb", padding=4, update_interval=1),
-                    widget.CPUGraph(background="2e3440", graph_color="8fbcbb", padding=4),
-                    widget.MemoryGraph(background="2e3440", graph_color="8fbcbb", padding=4),
+                    widget.Volume(background="2e3440", foreground="8fbcbb", padding=4, update_interval=5),
+                    widget.CPUGraph(background="2e3440", graph_color="8fbcbb", padding=4, frequency=5),
+                    widget.MemoryGraph(background="2e3440", graph_color="8fbcbb", padding=4, frequency=5),
                     widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
                     widget.Clock(format='%a %H:%M', background = "2e3440", foreground = "8fbcbb", pading=4),
                     widget.TextBox(text=' ', background="2e3440", foreground="8fbcbb", padding=2),
-                    widget.Wlan(background="2e3440", foreground="8fbcbb", padding=4, interface="wlan0", format="{essid}"),
+                    widget.Wlan(background="2e3440", foreground="8fbcbb", padding=4, interface="wlan0", format="{essid}", update_interval=5),
                 ],
                 24,
             ),
