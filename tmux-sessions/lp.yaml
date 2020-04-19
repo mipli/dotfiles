@@ -8,7 +8,7 @@ windows:
       - cd ~/code/aptoma/layoutpreview
     panes:
       - shell_command:
-        - cd frontend
+        - cd layoutpreview
 
   - window_name: API
     layout: main-vertical
@@ -17,7 +17,7 @@ windows:
       - cd ~/code/aptoma/layoutpreview
     panes:
       - shell_command:
-        - cd api
+        - cd layout-api
 
   - window_name: Server Window
     layout: even-horizontal
@@ -26,23 +26,22 @@ windows:
       - cd ~/code/aptoma/layoutpreview
     panes:
       - shell_command:
-        - cd api
+        - cd layout-api
         - nvm use 
         - sleep 120
-        - nodemon | pretty-hapi-log
+        - nodemon 
       - shell_command:
-        - cd frontend
+        - cd layoutpreview
         - tail -f app/log/app.log
       - shell_command:
-        - cd frontend
-        - vagrant up
+        - cd layoutpreview
         - npm run webpack:watch
 
   - window_name: LP Publish Proxy
     layout: main-vertical
     shell_command_before:
       - source ~/.nvm/nvm.sh
-      - cd ~/code/aptoma/lp-publish-proxy
+      - cd ~/code/aptoma/layoutpreview/lp-publish-proxy
     panes:
       - shell_command:
         - nvm use
@@ -58,8 +57,8 @@ windows:
       - shell_command:
         - cd layoutpreview-pages
         - nvm use
-        - PORT=8980 node index.js
+        - PORT=9980 node index.js
       - shell_command:
         - cd lp-screenshots
         - nvm use
-        - PORT=8990 node index.js
+        - PORT=9990 node index.js

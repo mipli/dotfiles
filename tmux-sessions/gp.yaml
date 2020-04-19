@@ -1,0 +1,20 @@
+session_name: greenflippers
+windows:
+  - window_name: Anubis
+    focus: true
+    layout: main-vertical
+    shell_command_before:
+      - cd ~/code/greenflippers/anubis
+    panes:
+      - shell_command:
+        - cd .
+
+  - window_name: Open Loyalty
+    layout: main-vertical
+    options:
+      monitor-activity: off
+    shell_command_before:
+      - cd ~/code/greenflippers/open-loyalty
+    panes:
+      - shell_command:
+        - docker-compose -f docker/docker-compose.dev.yml up

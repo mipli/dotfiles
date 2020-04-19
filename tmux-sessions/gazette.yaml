@@ -1,11 +1,10 @@
-session_name: brokkr
+session_name: gazette
 windows:
   - window_name: API
     focus: true
     layout: main-vertical
     shell_command_before:
-      - source ~/.nvm/nvm.sh
-      - cd ~/code/aptoma/brokkr
+      - cd ~/code/aptoma/gazette
     panes:
       - shell_command:
         - cd .
@@ -13,9 +12,11 @@ windows:
   - window_name: Logs
     layout: even-horizontal
     shell_command_before:
-      - source ~/.nvm/nvm.sh
-      - cd ~/code/aptoma/brokkr
+      - cd ~/code/aptoma/gazette
     panes:
       - shell_command:
-        - nvm use
-        - nodemon | pretty-hapi-log
+        - npm run webpack:watch
+      - shell_command:
+        - npm run start:dev
+      - shell_command:
+        - npm run styles:watch
