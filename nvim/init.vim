@@ -12,11 +12,7 @@ if dein#load_state('/home/michael/.cache/dein')
 
   call dein#add('Shougo/denite.nvim')
 
-  call dein#add('neoclide/coc.nvim', {'merge':0, 'build': './install.sh nightly'})
-
-  let g:coc_node_path = '.nvm/versions/node/v13.5.0/bin/node'
-
-  call dein#add('w0rp/ale')
+  call dein#add('dense-analysis/ale')
 
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
@@ -38,11 +34,12 @@ if dein#load_state('/home/michael/.cache/dein')
 
   call dein#add('dbeniamine/todo.txt-vim')
 
-  call dein#add('leafOfTree/vim-vue-plugin')
-
   call dein#add('glacambre/firenvim')
 
   call dein#add('arcticicestudio/nord-vim')
+
+  call dein#add('rust-lang/rust.vim')
+  call dein#add('arzg/vim-rust-syntax-ext')
 
   call dein#end()
   call dein#save_state()
@@ -104,24 +101,6 @@ endif
 
   " Goyo toggle
   nnoremap <silent><leader>vv :Goyo<cr>:set linebreak<cr>:set wrap<cr>
-
-  " CoC mappings
-  
-  " Use tab for trigger completion with characters ahead and navigate.
-  " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-  inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ coc#refresh()
-  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-  endfunction
-
-  " Use <c-space> for trigger completion.
-  inoremap <silent><expr> <c-space> coc#refresh()
 
   " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
   " Coc only does snippet and additional edit on confirm.
@@ -325,20 +304,6 @@ endif
 
 " Tagbar -----------------------------------------------------{{{
 nmap <F8> :TagbarToggle<CR>
-
-let g:tagbar_type_rust = {
-      \ 'ctagstype' : 'rust',
-      \ 'kinds' : [
-      \'T:types,type definitions',
-      \'f:functions,function definitions',
-      \'g:enum,enumeration names',
-      \'s:structure names',
-      \'m:modules,module names',
-      \'c:consts,static constants',
-      \'t:traits',
-      \'i:impls,trait implementations',
-      \]
-      \}
 " }}}
 
 " Denite ---------------------------------------------------------------------{{{
@@ -383,16 +348,33 @@ let g:tagbar_type_rust = {
 "}}}
 
 " Ale -------------------------------------------------------------------{{{
-let g:ale_sign_column_always = 1
+let g:ale_sign_column_always = 0
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 1
 let g:ale_completion_enabled = 1
+let g:ale_fix_on_save = 1
 
+let g:ale_rust_rls_config = {
+	\ 'rust': {
+		\ 'all_targets': 1,
+		\ 'build_on_save': 1,
+		\ 'clippy_preference': 'on'
+	\ }
+	\ }
+let g:ale_rust_rls_toolchain = ''
+let g:ale_rust_rls_executable = 'rust-analyzer'
 let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'rust': ['rls'],
-\}
+    \ 'javascript': ['eslint'],
+    \ 'rust': ['rls']
+    \ }
+let g:ale_fixers = {
+    \ 'javascript': ['prettier', 'eslint'],
+    \ 'rust': ['rustfmt']
+    \ }
 
 nmap <silent> <C-q> <Plug>(ale_next_wrap)
+nmap <silent> gd :ALEGoToDefinition<cr>
 "}}}
+
+
