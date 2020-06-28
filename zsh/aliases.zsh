@@ -64,3 +64,7 @@ plog() {
 mem() {
   ps -eo rss,pid,euser,args:100 --sort %mem | grep -v grep | grep -i $@ | awk '{total += $1; printf $1/1024 "MB"; $1=""; print } END { print "Total: " total/1024 "MB"}'
 }
+
+gitdiff() {
+    git diff --name-only --diff-filter=d 2>/dev/null | xargs bat --diff
+}

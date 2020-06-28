@@ -4,8 +4,8 @@ windows:
     focus: true
     layout: main-vertical
     shell_command_before:
-      - source ~/.nvm/nvm.sh
       - cd ~/code/aptoma/brokkr
+      - source ~/.nvm/nvm.sh
     panes:
       - shell_command:
         - cd .
@@ -13,8 +13,8 @@ windows:
   - window_name: Logs
     layout: even-horizontal
     shell_command_before:
-      - source ~/.nvm/nvm.sh
       - cd ~/code/aptoma/brokkr
+      - source ~/.nvm/nvm.sh
     panes:
       - shell_command:
         - nvm use
