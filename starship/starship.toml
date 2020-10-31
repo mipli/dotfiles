@@ -1,0 +1,29 @@
+forma = """\
+    $directory\
+    $git_branch\
+    $git_commit\
+    $git_state\
+    $git_status\
+    $package\
+    $nodejs\
+    $python\
+    $rust\
+    $nix_shell\
+    $aws\
+    $env_var\
+    $cmd_duration\
+    $custom\
+    $line_break\
+    $jobs\
+    $character\
+  """
+
+[aws]
+symbol = "🅰 "
+displayed_items = "all"
+
+[aws.region_aliases]
+eu-central-1 = "euc"
+
+[directory]
+truncation_length = 8
