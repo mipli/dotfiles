@@ -206,10 +206,10 @@ bindsym $mod+r mode "resize"
 
 # Status Bar:
 bar {
-    font pango:Fira Code Regular Nerd Font Complete Mono 10
+    font pango:FiraCode Nerd 10
     position top
     height 18
-    status_command /home/michael/code/rust/i3status-rust/target/release/i3status-rs .config/sway/status.toml 
+    status_command /usr/bin/i3status-rs
     colors {
         separator #eceff4
         background #3b4252

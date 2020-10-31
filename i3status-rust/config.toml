@@ -2,18 +2,13 @@
 name = "awesome5"
 
 [theme]
-name = "solarized-dark"
+name = "space-villain"
 [theme.overrides]
-idle_bg = "#81a1c1"
-idle_fg = "#4c566a"
-info_bg = "#7995a1"
-info_fg = "#4c566a"
-good_bg = "#a3be8c"
-good_fg = "#4c566a"
-warning_bg = "#ebcb8b"
-warning_fg = "#4c566a"
-critical_bg = "#bf616a"
-critical_fg = "#4c566a"
+idle_bg = "#3b4252"
+info_bg = "#3b4252"
+good_bg = "#3b4252"
+warning_bg = "#3b4252"
+critical_bg = "#3b4252"
 
 [[block]]
 block = "watson"
