@@ -8,6 +8,7 @@ env:
   TERM: xterm-256color
 
 window:
+  dynamic_title: true
   # Window padding (changes require restart)
   #
   # Blank space added around the window in pixels. This padding is scaled
@@ -66,7 +67,7 @@ font:
 #   - Linear
 #
 # Specifying a `duration` of `0` will disable the visual bell.
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
   color: '0xffffff'
@@ -84,7 +85,6 @@ background_opacity: 0.98
   #save_to_clipboard: false
 
 # Allow terminal applications to change Alacritty's window title.
-dynamic_title: true
 
 colors:
   primary:

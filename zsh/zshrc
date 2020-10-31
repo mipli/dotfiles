@@ -11,10 +11,12 @@ export KEYTIMEOUT=1
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-zplugin ice pick"async.zsh" src"pure.zsh"; zplugin light sindresorhus/pure
+# zplugin ice pick"async.zsh" src"pure.zsh"; zplugin light sindresorhus/pure
 
-source ~/.dotfiles/zsh/pure/async.zsh
-source ~/.dotfiles/zsh/pure/pure.zsh
+# source ~/.dotfiles/zsh/pure/async.zsh
+# source ~/.dotfiles/zsh/pure/pure.zsh
+#
+
 
 zplugin light urbainvaes/fzf-marks
 
@@ -106,3 +108,9 @@ fi
 
 ## MUST BE AT END
 zplugin light zsh-users/zsh-syntax-highlighting
+eval "$(starship init zsh)"
+
+
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform
