@@ -29,7 +29,7 @@ window:
 
 # Font configuration
 font:
-  size: 8.0
+  size: 9.0
 
   # Normal (roman) font face
   normal:

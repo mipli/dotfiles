@@ -50,8 +50,7 @@ if dein#load_state('/home/michael/.cache/dein')
   call dein#add('rust-lang/rust.vim')
   call dein#add('arzg/vim-rust-syntax-ext')
 
-  call dein#add('haorenW1025/completion-nvim')
-  call dein#add('haorenW1025/diagnostic-nvim')
+  call dein#add('nvim-lua/completion-nvim')
 
   call dein#add('hrsh7th/vim-vsnip')
   call dein#add('hrsh7th/vim-vsnip-integ')
@@ -74,17 +73,30 @@ endif
 autocmd BufWrite *.rs :Autoformat
 autocmd BufWrite *.js :Autoformat
 
-" Use LSP omni-completion in Rust files
-" autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
-let g:diagnostic_virtual_text_prefix = ' '
-let g:diagnostic_enable_virtual_text = 1
-let g:diagnostic_insert_delay = 1
-let g:space_before_virtual_text = 5
-
-nmap [e :PrevDiagnosticCycle<cr>
-nmap ]e :NextDiagnosticCycle<cr>
-
 lua require 'lsp'
+
+lua << EOF
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- This will disable virtual text, like doing:
+    -- let g:diagnostic_enable_virtual_text = 0
+    virtual_text = true,
+
+    virtual_text = {
+      spacing = 2,
+      prefix = ' ',
+    },
+
+    -- This is similar to:
+    -- "let g:diagnostic_insert_delay = 1"
+    update_in_insert = false,
+  }
+)
+EOF
+
+nnoremap <leader>dn <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <leader>dp <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+
 
 
 " Set completeopt to have a better completion experience

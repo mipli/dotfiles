@@ -9,6 +9,10 @@ autoload -Uz _zplugin
 bindkey -v
 export KEYTIMEOUT=1
 
+export NVM_LAZY_LOAD=true
+export NVM_AUTO_USE=true
+zplugin light lukechilds/zsh-nvm
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # zplugin ice pick"async.zsh" src"pure.zsh"; zplugin light sindresorhus/pure
@@ -21,9 +25,6 @@ export KEYTIMEOUT=1
 zplugin light urbainvaes/fzf-marks
 
 zplugin light zsh-users/zsh-autosuggestions
-
-export NVM_LAZY_LOAD=true
-zplugin light lukechilds/zsh-nvm
 
 # }}}
 #
