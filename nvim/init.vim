@@ -12,6 +12,9 @@ if dein#load_state('/home/michael/.cache/dein')
 
   call dein#add('Shougo/denite.nvim')
   call dein#add('neovim/nvim-lsp')
+  call dein#add('nvim-treesitter/nvim-treesitter', { 'build': ':TSUpdate' })
+
+  call dein#add('nvim-lua/completion-nvim')
   " call dein#add('Shougo/deoplete.nvim', { 'build': ':UpdateRemotePlugins' })
   " call dein#add('Shougo/deoplete-lsp')
   " let g:deoplete#enable_at_startup = 1
@@ -50,8 +53,6 @@ if dein#load_state('/home/michael/.cache/dein')
   call dein#add('rust-lang/rust.vim')
   call dein#add('arzg/vim-rust-syntax-ext')
 
-  call dein#add('nvim-lua/completion-nvim')
-
   call dein#add('hrsh7th/vim-vsnip')
   call dein#add('hrsh7th/vim-vsnip-integ')
 
@@ -74,30 +75,6 @@ autocmd BufWrite *.rs :Autoformat
 autocmd BufWrite *.js :Autoformat
 
 lua require 'lsp'
-
-lua << EOF
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    -- This will disable virtual text, like doing:
-    -- let g:diagnostic_enable_virtual_text = 0
-    virtual_text = true,
-
-    virtual_text = {
-      spacing = 2,
-      prefix = ' ',
-    },
-
-    -- This is similar to:
-    -- "let g:diagnostic_insert_delay = 1"
-    update_in_insert = false,
-  }
-)
-EOF
-
-nnoremap <leader>dn <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-nnoremap <leader>dp <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-
-
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
@@ -494,15 +471,6 @@ function! s:denite_my_settings() abort
 endfunction
 
 "}}}
-
-" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-" nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-" " nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-" nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.

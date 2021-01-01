@@ -1,8 +1,7 @@
-local nvim_lsp = require('nvim_lsp')
+local lspconfig = require('lspconfig')
 
 local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  require'diagnostic'.on_attach()
   require'completion'.on_attach()
 
   local opts = { noremap=true, silent=true }
@@ -17,15 +16,41 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>de', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', ':PrevDiagnostic<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', ':NextDiagnostic<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '[D', ':PrevDiagnosticCycle<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', ']D', ':NextDiagnosticCycle<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>dn', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>dp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 end
 
-local servers = {'cssls', 'bashls', 'diagnosticls', 'dockerls', 'html', 'tsserver', 'jsonls', 'rust_analyzer', 'vimls', 'pyls', 'terraformls'}
+local servers = {'cssls', 'bashls', 'dockerls', 'diagnosticls', 'html', 'jsonls', 'rust_analyzer', 'vimls', 'pyls', 'terraformls'}
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  lspconfig[lsp].setup {
   on_attach = on_attach,
 }
 end
+
+local treesitter = require'nvim-treesitter.configs'
+
+treesitter.setup {
+  ensure_installed = {"typescript", "html", "tsx", "lua", "json", "rust", "css", "javascript"},
+  highlight = {
+    enable = true,
+    disable = { "javascript" }
+  },
+}
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- This will disable virtual text, like doing:
+    -- let g:diagnostic_enable_virtual_text = 0
+    virtual_text = true,
+
+    virtual_text = {
+      spacing = 2,
+      prefix = ' ',
+    },
+
+    -- This is similar to:
+    -- "let g:diagnostic_insert_delay = 1"
+    update_in_insert = false,
+  }
+)
+
