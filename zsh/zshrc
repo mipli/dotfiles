@@ -1,9 +1,8 @@
-# {{{ Zplugin
-### Added by Zplugin's installer
-source '/home/michael/.zplugin/bin/zplugin.zsh'
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
-### End of Zplugin's installer chunk
+
+source ~/.zinit/bin/zinit.zsh
+
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 # Enforce VI mode
 bindkey -v
@@ -11,22 +10,13 @@ export KEYTIMEOUT=1
 
 export NVM_LAZY_LOAD=true
 export NVM_AUTO_USE=true
-zplugin light lukechilds/zsh-nvm
+zinit light lukechilds/zsh-nvm
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# zplugin ice pick"async.zsh" src"pure.zsh"; zplugin light sindresorhus/pure
-
-# source ~/.dotfiles/zsh/pure/async.zsh
-# source ~/.dotfiles/zsh/pure/pure.zsh
-#
-
-
-zplugin light urbainvaes/fzf-marks
-
-zplugin light zsh-users/zsh-autosuggestions
-
-# }}}
+zinit light urbainvaes/fzf-marks
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma/fast-syntax-highlighting
 #
 export EDITOR=/usr/bin/nvim
 
@@ -107,10 +97,7 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
-## MUST BE AT END
-zplugin light zsh-users/zsh-syntax-highlighting
 eval "$(starship init zsh)"
-
 eval "$(zoxide init zsh)"
 
 autoload -U +X bashcompinit && bashcompinit
