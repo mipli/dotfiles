@@ -111,7 +111,9 @@ fi
 zplugin light zsh-users/zsh-syntax-highlighting
 eval "$(starship init zsh)"
 
-
+eval "$(zoxide init zsh)"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
+
+export PATH="$HOME/.tfenv/bin:$PATH"
