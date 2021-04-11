@@ -11,15 +11,12 @@ if dein#load_state('/home/michael/.cache/dein')
   call dein#add('/home/michael/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   call dein#add('Shougo/denite.nvim')
-  call dein#add('neovim/nvim-lsp')
   call dein#add('nvim-treesitter/nvim-treesitter', { 'build': ':TSUpdate' })
 
-  call dein#add('nvim-lua/completion-nvim')
-  " call dein#add('Shougo/deoplete.nvim', { 'build': ':UpdateRemotePlugins' })
-  " call dein#add('Shougo/deoplete-lsp')
-  " let g:deoplete#enable_at_startup = 1
-  " call dein#add('Shougo/neosnippet.vim')
-  " call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('neovim/nvim-lspconfig')
+  call dein#add('nvim-lua/lsp_extensions.nvim')
+  call dein#add('hrsh7th/nvim-compe')
+  call dein#add('hrsh7th/vim-vsnip')
 
   call dein#add('Chiel92/vim-autoformat')
 
@@ -53,9 +50,6 @@ if dein#load_state('/home/michael/.cache/dein')
   call dein#add('rust-lang/rust.vim')
   call dein#add('arzg/vim-rust-syntax-ext')
 
-  call dein#add('hrsh7th/vim-vsnip')
-  call dein#add('hrsh7th/vim-vsnip-integ')
-
   call dein#add('hashivim/vim-terraform')
 
   call dein#end()
@@ -75,23 +69,15 @@ autocmd BufWrite *.rs :Autoformat
 autocmd BufWrite *.js :Autoformat
 
 lua require 'lsp'
+" Enable type inlay hints
+autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
+\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
 
 " Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
+set completeopt=menu,menuone,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
-
-" You can use other key to expand snippet.
-imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-imap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-smap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-
-
 
 " customise deoplete
 " call deoplete#custom#source('_', 'max_menu_width', 80)
@@ -146,20 +132,36 @@ autocmd BufRead fugitive\:* xnoremap <buffer> dp :diffput<cr>|xnoremap <buffer> 
 " Goyo toggle
 nnoremap <silent><leader>vv :Goyo<cr>:set linebreak<cr>:set wrap<cr>
 
-" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Use K for show documentation in preview window
-" nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> ga    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+
+
+
+set updatetime=300
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+
 
 " }}}
 
@@ -248,6 +250,7 @@ syntax enable
 
 set background=dark
 colorscheme nord
+set termguicolors
 
 " no need to fold things in markdown all the time
 let g:vim_markdown_folding_disabled = 1
@@ -260,6 +263,21 @@ let g:instant_markdown_autostart = 1
 
 " syntax highlight files based on folder
 autocmd BufRead,BufNewFile ~/.Xdefaults.d/* set filetype=xdefaults
+
+
+" Nord style treesitter highlight
+hi TSKeyword guifg=#81a1c1
+hi TSProperty guifg=#8fbcbb gui=italic
+hi TSException guifg=#88c0d0 gui=italic
+hi TSConstant guifg=#8fbcbb
+hi TSVariableBuiltin guifg=#8fbcbb gui=bold
+hi TSTypeBuiltin guifg=#81a1c1
+hi TSRepeat guifg=#81a1c1
+" hi TSConstructor guifg=#ebcb8b gui=bold
+" hi TSException guifg=#88c0d0 gui=italic
+" hi TSMethod guifg=#ebcb8b
+" hi TSRepeat guifg=#88c0d0
+
 "}}}
 
 " Vim Airline ---------------------------------------------------------------{{{
