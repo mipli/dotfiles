@@ -33,7 +33,7 @@ gprune() {
   fi
 }
 
-gdelete() {
+gshear() {
   if [[ $1 != "--run" ]]; then
     git fetch --all -p -q && git for-each-ref --format '%(refname:short) %(upstream:track)' |  awk '$2 == "[gone]" {print $1}'
   else
