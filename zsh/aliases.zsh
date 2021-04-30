@@ -33,31 +33,11 @@ gprune() {
   fi
 }
 
-alias onelogin='eval $(op signin aptoma)'
-
-oneitem() {
-  op get item $1 | jq '{uuid, title: .overview.title, details, tags: .overview.tags}'
-}
-
-onesearch() {
-  op list items | jq '.[] | {uuid, title: .overview.title, tags: .overview.tags} | select(.title | contains ("'$1'"))'
-}
-
-onetag() {
-  op list items | jq '.[] | {uuid, title: .overview.title, tags: .overview.tags} | select(.tags | index("'$1'"))'
-}
-
-plog() {
-  PROG=$1
-  shift
-  if [[ $PROG == "brokkr-prod" ]]; then 
-    papertrail -g 'Docker Cluster - Production' program:brokkr $@
-  elif [[ $PROG == "brokkr-dev" ]]; then
-    papertrail -g 'Docker Cluster - Development' program:brokkr $@
-  elif [[ $PROG == "docker-prod" ]]; then
-    papertrail -g 'Docker Cluster - Production' $@
+gdelete() {
+  if [[ $1 != "--run" ]]; then
+    git fetch --all -p -q && git for-each-ref --format '%(refname:short) %(upstream:track)' |  awk '$2 == "[gone]" {print $1}'
   else
-    echo "Supports 'brokkr-dev', 'brokkr-prod', 'docker-prod'"
+    git fetch --all -p -q && git for-each-ref --format '%(refname:short) %(upstream:track)' |  awk '$2 == "[gone]" {print $1}' | xargs git branch -D
   fi
 }
 
