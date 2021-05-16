@@ -45,12 +45,14 @@ if dein#load_state('/home/michael/.cache/dein')
 
   call dein#add('glacambre/firenvim')
 
-  call dein#add('arcticicestudio/nord-vim')
+  call dein#add('shaunsingh/nord.nvim')
 
   call dein#add('rust-lang/rust.vim')
   call dein#add('arzg/vim-rust-syntax-ext')
 
   call dein#add('hashivim/vim-terraform')
+
+  call dein#add('psf/black')
 
   call dein#end()
   call dein#save_state()
@@ -263,20 +265,6 @@ let g:instant_markdown_autostart = 1
 
 " syntax highlight files based on folder
 autocmd BufRead,BufNewFile ~/.Xdefaults.d/* set filetype=xdefaults
-
-
-" Nord style treesitter highlight
-hi TSKeyword guifg=#81a1c1
-hi TSProperty guifg=#8fbcbb gui=italic
-hi TSException guifg=#88c0d0 gui=italic
-hi TSConstant guifg=#8fbcbb
-hi TSVariableBuiltin guifg=#8fbcbb gui=bold
-hi TSTypeBuiltin guifg=#81a1c1
-hi TSRepeat guifg=#81a1c1
-" hi TSConstructor guifg=#ebcb8b gui=bold
-" hi TSException guifg=#88c0d0 gui=italic
-" hi TSMethod guifg=#ebcb8b
-" hi TSRepeat guifg=#88c0d0
 
 "}}}
 
