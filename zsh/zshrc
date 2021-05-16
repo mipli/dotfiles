@@ -14,7 +14,6 @@ zinit light lukechilds/zsh-nvm
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-zinit light urbainvaes/fzf-marks
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma/fast-syntax-highlighting
 #
@@ -99,6 +98,7 @@ fi
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+eval "$(navi widget zsh)"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
