@@ -1,4 +1,4 @@
-forma = """\
+format = """\
     $directory\
     $git_branch\
     $git_commit\
@@ -20,7 +20,7 @@ forma = """\
 
 [aws]
 symbol = "🅰 "
-displayed_items = "all"
+format = 'on [$symbol($profile )(\($region\) )]($style)'
 
 [aws.region_aliases]
 eu-central-1 = "euc"
