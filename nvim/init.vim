@@ -45,7 +45,9 @@ if dein#load_state('/home/michael/.cache/dein')
 
   call dein#add('glacambre/firenvim')
 
-  call dein#add('shaunsingh/nord.nvim')
+  " call dein#add('shaunsingh/nord.nvim')
+  call dein#add('rktjmp/lush.nvim')
+  call dein#add('kunzaatko/nord.nvim')
 
   call dein#add('rust-lang/rust.vim')
   call dein#add('arzg/vim-rust-syntax-ext')
@@ -65,10 +67,9 @@ if dein#check_install()
   call dein#install()
 endif
 
-" Enable deoplete autocompletion in Rust files
-
-autocmd BufWrite *.rs :Autoformat
-autocmd BufWrite *.js :Autoformat
+autocmd BufWritePre *.rs :Autoformat
+autocmd BufWritePre *.js :Autoformat
+autocmd BufWritePre *.py execute ':Black'
 
 lua require 'lsp'
 " Enable type inlay hints
