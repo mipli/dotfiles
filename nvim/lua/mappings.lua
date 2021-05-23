@@ -5,6 +5,23 @@ local options = {
   silent = true,
 }
 
+--- {{{ General mappings
+utils.map('n', 'Q', '<nop>', {noremap = true})
+utils.map('n', ';', ':', {noremap = true})
+
+utils.map('v', 'J', [[:m '>+1<cr>gv=gv]], {noremap = true})
+utils.map('v', 'J', [[:m '>+1<cr>gv=gv]], {noremap = true})
+utils.map('v', 'K', [[:m '<-2<cr>gv=gv]], {noremap = true})
+
+utils.map('n', '<Tab>', ':tabnext<cr>', {noremap = true})
+utils.map('n', '<S-Tab>', ':tabprev<cr>', {noremap = true})
+
+utils.map('n', '<C-J>', '<C-W><C-J>', options)
+utils.map('n', '<C-K>', '<C-W><C-K>', options)
+utils.map('n', '<C-L>', '<C-W><C-L>', options)
+utils.map('n', '<C-H>', '<C-W><C-H>', options)
+--- }}}
+
 -- {{{ compe completion
 utils.map('n', '<C-Space>', 'compe#complete()', {noremap = true, silent = true, expr = true})
 utils.map('i', '<CR>', 'compe#confirm(\'<CR>\')', {noremap = true, silent = true, expr = true})

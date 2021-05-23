@@ -21,7 +21,7 @@ return require('packer').startup({
     use {
       'lewis6991/gitsigns.nvim',
       requires = {
-	'nvim-lua/plenary.nvim'
+        'nvim-lua/plenary.nvim'
       }
     }
 
@@ -40,6 +40,8 @@ return require('packer').startup({
     use "nvim-treesitter/nvim-treesitter"
 
     use 'simrat39/rust-tools.nvim'
+
+    use 'Chiel92/vim-autoformat'
   end,
   config = {
     display = {

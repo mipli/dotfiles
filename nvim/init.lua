@@ -61,23 +61,6 @@ o.wildmenu = true
 -- Ignore files
 o.wildignore=[[*.pyc,**/coverage/*,**/node_modules/*,**/.git/*]]
 
--- General mappings, not depending on any plugins
-utils.map('n', 'Q', '<nop>', {noremap = true})
-utils.map('n', ';', ':', {noremap = true})
-
-utils.map('v', 'J', [[:m '>+1<cr>gv=gv]], {noremap = true})
-utils.map('v', 'J', [[:m '>+1<cr>gv=gv]], {noremap = true})
-utils.map('v', 'K', [[:m '<-2<cr>gv=gv]], {noremap = true})
-
-utils.map('n', '<Tab>', ':tabnext<cr>', {noremap = true})
-utils.map('n', '<S-Tab>', ':tabprev<cr>', {noremap = true})
-
-utils.create_augroup({
-  {'FileType', '*', 'setlocal', 'shiftwidth=4'},
-  {'FileType', 'lua', 'setlocal', 'shiftwidth=2'},
-  {'BufNewFile,BufReadPost', '*.md', 'set', 'filetype=markdown'},
-}, 'Base')
-
 require('plugins')
 require('statusline')
 require('lsp')
@@ -92,3 +75,15 @@ vim.cmd [[let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1]]
 
 vim.cmd [[colorscheme nord]]
 vim.cmd [[set background=dark]]
+
+utils.create_augroup({
+  {'BufWritePre', '*.lua', ':Autoformat'},
+  {'BufWritePre', '*.rs', ':Autoformat'},
+  {'BufWritePre', '*.js', ':Autoformat'},
+}, 'Format')
+
+utils.create_augroup({
+  {'FileType', '*', 'setlocal', 'shiftwidth=4'},
+  {'FileType', 'lua', 'setlocal', 'shiftwidth=2'},
+  {'BufNewFile,BufReadPost', '*.md', 'set', 'filetype=markdown'},
+}, 'Base')
