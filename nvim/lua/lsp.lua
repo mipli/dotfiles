@@ -1,3 +1,4 @@
+local utils = require('utils');
 local nvim_lsp = require'lspconfig'
 
 local opts = {
@@ -21,29 +22,6 @@ local opts = {
 }
 
 require('rust-tools').setup(opts)
-
-local on_attach = function(client)
-end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-local servers = {'dockerls', 'vimls', 'pyls', 'terraformls'}
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    capabilities=capabilities,
-    on_attach = on_attach,
-  }
-end
-
--- Enable diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    signs = true,
-    update_in_insert = true,
-  }
-)
 
 require'compe'.setup {
   enabled = true;
@@ -70,3 +48,9 @@ require'compe'.setup {
     snippets_nvim = true;
   };
 }
+
+
+vim.o.updatetime = 300
+utils.create_augroup({
+  {'CursorHold', '*', 'lua vim.lsp.diagnostic.show_line_diagnostics()'}
+}, 'Lsp')
