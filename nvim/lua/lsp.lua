@@ -1,4 +1,26 @@
-local lspconfig = require('lspconfig')
+local nvim_lsp = require'lspconfig'
+
+local opts = {
+    tools = {
+        autoSetHints = true,
+        hover_with_actions = true,
+        runnables = {
+            use_telescope = true
+        },
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {}, -- rust-analyer options
+}
+
+require('rust-tools').setup(opts)
 
 local on_attach = function(client)
 end
@@ -6,9 +28,9 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local servers = {'dockerls', 'rust_analyzer', 'vimls', 'pyls', 'terraformls'}
+local servers = {'dockerls', 'vimls', 'pyls', 'terraformls'}
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+  nvim_lsp[lsp].setup {
     capabilities=capabilities,
     on_attach = on_attach,
   }

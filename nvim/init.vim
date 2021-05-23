@@ -17,6 +17,9 @@ if dein#load_state('/home/michael/.cache/dein')
   call dein#add('nvim-lua/lsp_extensions.nvim')
   call dein#add('hrsh7th/nvim-compe')
   call dein#add('hrsh7th/vim-vsnip')
+  call dein#add('nvim-lua/popup.nvim')
+  call dein#add('nvim-lua/plenary.nvim')
+  call dein#add('nvim-telescope/telescope.nvim')
 
   call dein#add('Chiel92/vim-autoformat')
 
@@ -51,6 +54,7 @@ if dein#load_state('/home/michael/.cache/dein')
 
   call dein#add('rust-lang/rust.vim')
   call dein#add('arzg/vim-rust-syntax-ext')
+  call dein#add('simrat39/rust-tools.nvim')
 
   call dein#add('hashivim/vim-terraform')
 
@@ -72,9 +76,6 @@ autocmd BufWritePre *.js :Autoformat
 autocmd BufWritePre *.py execute ':Black'
 
 lua require 'lsp'
-" Enable type inlay hints
-autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
 
 " Set completeopt to have a better completion experience
 set completeopt=menu,menuone,noselect
