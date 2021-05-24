@@ -80,6 +80,7 @@ utils.create_augroup({
   {'BufWritePre', '*.lua', ':Autoformat'},
   {'BufWritePre', '*.rs', ':Autoformat'},
   {'BufWritePre', '*.js', ':Autoformat'},
+  {'BufWritePre', '*.py', ':Black'},
 }, 'Format')
 
 utils.create_augroup({

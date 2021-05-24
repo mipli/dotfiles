@@ -104,3 +104,5 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
 
 export PATH="$HOME/.tfenv/bin:$PATH"
+
+alias luamake=/home/michael/local/language-servers/lua-language-server/3rd/luamake/luamake
