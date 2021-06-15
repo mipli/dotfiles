@@ -8,6 +8,8 @@ autoload -Uz _zinit
 bindkey -v
 export KEYTIMEOUT=1
 
+export AWS_PROFILE=fauna-root
+
 export NVM_LAZY_LOAD=true
 export NVM_AUTO_USE=true
 zinit light lukechilds/zsh-nvm

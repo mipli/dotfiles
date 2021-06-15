@@ -57,3 +57,7 @@ dcleanup(){
 parufind() {
   paru -Sl | awk '{print $2($4=="" ? "" : " *")}' | sk --multi --preview 'paru -Si {1}' --reverse | xargs -ro paru -S
 }
+
+gcos() {
+    git checkout $(git branch --list | rg -v '^\*' | sk)
+}

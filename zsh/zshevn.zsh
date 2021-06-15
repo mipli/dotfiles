@@ -1,4 +1,3 @@
-# Customize to your needs...
 export DISABLE_AUTO_TITLE='true'
 
 export LC_TIME=en_US.UTF-8
