@@ -4,7 +4,7 @@ local b = vim.bo
 
 local utils = require('utils')
 
-vim.g.mapleader = ','
+vim.g.mapleader = ' '
 
 b.autoindent = true
 b.expandtab = true
@@ -49,6 +49,10 @@ o.timeoutlen = 300
 
 o.mouse = 'a'
 
+w.foldmethod='expr'
+w.foldexpr = [[nvim_treesitter#foldexpr()]]
+w.foldlevel = 2
+
 if o.shell == 'fish$' then
   o.shell = [[/bin/bash]]
 end
@@ -73,7 +77,7 @@ require('treesitter-config')
 vim.cmd [[let $NVIM_TUI_ENABLE_TRUE_COLOR=1]]
 vim.cmd [[let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1]]
 
-vim.cmd [[colorscheme nord]]
+vim.cmd [[colorscheme tokyonight]]
 vim.cmd [[set background=dark]]
 
 utils.create_augroup({

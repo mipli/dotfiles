@@ -50,6 +50,7 @@ utils.map_lua('n', 'gT', [[vim.lsp.buf.type_definition()]], options)
 utils.map_lua('n', 'grf', [[vim.lsp.buf.references()]], options)
 utils.map_lua('n', 'g0', [[vim.lsp.buf.document_symbol()]], options)
 utils.map_lua('n', 'gW', [[vim.lsp.buf.workspace_symbol()]], options)
+utils.map_lua('n', 'ga', [[vim.lsp.buf.code_action()]], options)
 -- }}}
 
 -- {{{ telescope
