@@ -1,9 +1,6 @@
 local utils = require('utils');
 
-local options = {
-  noremap = true,
-  silent = true,
-}
+local options = {noremap = true, silent = true}
 
 --- {{{ General mappings
 utils.map('n', 'Q', '<nop>', {noremap = true})
@@ -22,10 +19,18 @@ utils.map('n', '<C-L>', '<C-W><C-L>', options)
 utils.map('n', '<C-H>', '<C-W><C-H>', options)
 --- }}}
 
+--- {{{ Commenting
+utils.map("n", "<leader>/", ":CommentToggle<CR>", options)
+utils.map("v", "<leader>/", ":CommentToggle<CR>", options)
+--- }}}
+
 -- {{{ compe completion
-utils.map('n', '<C-Space>', 'compe#complete()', {noremap = true, silent = true, expr = true})
-utils.map('i', '<CR>', 'compe#confirm(\'<CR>\')', {noremap = true, silent = true, expr = true})
-utils.map('i', '<C-e>', 'compe#close()', {noremap = true, silent = true, expr = true})
+utils.map('n', '<C-Space>', 'compe#complete()',
+          {noremap = true, silent = true, expr = true})
+utils.map('i', '<CR>', 'compe#confirm(\'<CR>\')',
+          {noremap = true, silent = true, expr = true})
+utils.map('i', '<C-e>', 'compe#close()',
+          {noremap = true, silent = true, expr = true})
 -- }}}
 
 -- {{{ diagnostic
@@ -34,11 +39,19 @@ utils.map_lua('n', 'g]', [[vim.lsp.diagnostic.goto_next()]], options)
 -- }}}
 
 -- {{{ vsnip
-utils.map('i', '<C-j>', [[vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>']], {expr = true})
-utils.map('s', '<C-j>', [[vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>']], {expr = true})
+utils.map('i', '<C-j>',
+          [[vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>']],
+          {expr = true})
+utils.map('s', '<C-j>',
+          [[vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>']],
+          {expr = true})
 
-utils.map('i', '<C-j>', [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>']], {expr = true})
-utils.map('s', '<C-j>', [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>']], {expr = true})
+utils.map('i', '<C-j>',
+          [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>']],
+          {expr = true})
+utils.map('s', '<C-j>',
+          [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>']],
+          {expr = true})
 -- }}}
 
 -- {{{ lsp
@@ -54,13 +67,23 @@ utils.map_lua('n', 'ga', [[vim.lsp.buf.code_action()]], options)
 -- }}}
 
 -- {{{ telescope
-utils.map_lua('n', '<leader>sf', [[require'telescope.builtin'.git_files{}]], options)
-utils.map_lua('n', '<leader>p', [[require'telescope.builtin'.find_files{}]], options)
-utils.map_lua('n', '<leader>rg', [[require'telescope.builtin'.live_grep{}]], options)
-utils.map_lua('n', '<leader>ls', [[require'telescope.builtin'.lsp_references{}]], options)
-utils.map_lua('n', '<leader>ws', [[require'telescope.builtin'.lsp_workspace_symbols{}]], options)
-utils.map_lua('n', '<leader>ds', [[require'telescope.builtin'.lsp_document_symbols{}]], options)
-utils.map_lua('n', '<leader>dg', [[require'telescope.builtin'.lsp_document_diagnostics{}]], options)
-utils.map_lua('n', '<leader>wg', [[require'telescope.builtin'.lsp_workspace_diagnostics{}]], options)
-utils.map_lua('n', '<leader>ld', [[require'telescope.builtin'.lsp_definition{}]], options)
+utils.map_lua('n', '<leader>sf', [[require'telescope.builtin'.git_files{}]],
+              options)
+utils.map_lua('n', '<leader>p', [[require'telescope.builtin'.find_files{}]],
+              options)
+utils.map_lua('n', '<leader>rg', [[require'telescope.builtin'.live_grep{}]],
+              options)
+utils.map_lua('n', '<leader>ls',
+              [[require'telescope.builtin'.lsp_references{}]], options)
+utils.map_lua('n', '<leader>ws',
+              [[require'telescope.builtin'.lsp_workspace_symbols{}]], options)
+utils.map_lua('n', '<leader>ds',
+              [[require'telescope.builtin'.lsp_document_symbols{}]], options)
+utils.map_lua('n', '<leader>dg',
+              [[require'telescope.builtin'.lsp_document_diagnostics{}]], options)
+utils.map_lua('n', '<leader>wg',
+              [[require'telescope.builtin'.lsp_workspace_diagnostics{}]],
+              options)
+utils.map_lua('n', '<leader>ld',
+              [[require'telescope.builtin'.lsp_definition{}]], options)
 -- }}}

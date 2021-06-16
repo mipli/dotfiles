@@ -30,9 +30,9 @@ w.relativenumber = true
 
 w.list = true
 if vim.fn.has('multi_byte') == 1 and vim.o.encoding == 'utf-8' then
-  o.listchars = [[tab:▸ ,extends:❯,precedes:❮,nbsp:±,trail:…]]
+    o.listchars = [[tab:▸ ,extends:❯,precedes:❮,nbsp:±,trail:…]]
 else
-  o.listchars = [[tab:> ,extends:>,precedes:<,nbsp:.,trail:_]]
+    o.listchars = [[tab:> ,extends:>,precedes:<,nbsp:.,trail:_]]
 end
 
 w.colorcolumn = [[100]]
@@ -49,13 +49,11 @@ o.timeoutlen = 300
 
 o.mouse = 'a'
 
-w.foldmethod='expr'
+w.foldmethod = 'expr'
 w.foldexpr = [[nvim_treesitter#foldexpr()]]
 w.foldlevel = 2
 
-if o.shell == 'fish$' then
-  o.shell = [[/bin/bash]]
-end
+if o.shell == 'fish$' then o.shell = [[/bin/bash]] end
 
 o.completeopt = [[menuone,noinsert,noselect]]
 
@@ -63,7 +61,7 @@ o.completeopt = [[menuone,noinsert,noselect]]
 o.wildmode = [[longest,list,full]]
 o.wildmenu = true
 -- Ignore files
-o.wildignore=[[*.pyc,**/coverage/*,**/node_modules/*,**/.git/*]]
+o.wildignore = [[*.pyc,**/coverage/*,**/node_modules/*,**/.git/*]]
 
 require('plugins')
 require('statusline')
@@ -73,22 +71,18 @@ require('mappings')
 require('gitsigns-config')
 require('telescope-config')
 require('treesitter-config')
+require('neoformat-config')
+require('colorizer').setup()
+require('nvim_comment').setup()
 
 vim.cmd [[let $NVIM_TUI_ENABLE_TRUE_COLOR=1]]
 vim.cmd [[let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1]]
 
-vim.cmd [[colorscheme tokyonight]]
 vim.cmd [[set background=dark]]
+vim.cmd [[colorscheme tokyonight]]
 
 utils.create_augroup({
-  {'BufWritePre', '*.lua', ':Autoformat'},
-  {'BufWritePre', '*.rs', ':Autoformat'},
-  {'BufWritePre', '*.js', ':Autoformat'},
-  {'BufWritePre', '*.py', ':Black'},
-}, 'Format')
-
-utils.create_augroup({
-  {'FileType', '*', 'setlocal', 'shiftwidth=4'},
-  {'FileType', 'lua', 'setlocal', 'shiftwidth=2'},
-  {'BufNewFile,BufReadPost', '*.md', 'set', 'filetype=markdown'},
+    {'FileType', '*', 'setlocal', 'shiftwidth=4'},
+    {'FileType', 'lua', 'setlocal', 'shiftwidth=2'},
+    {'BufNewFile,BufReadPost', '*.md', 'set', 'filetype=markdown'}
 }, 'Base')
