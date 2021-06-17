@@ -71,7 +71,7 @@ require('mappings')
 require('gitsigns-config')
 require('telescope-config')
 require('treesitter-config')
-require('neoformat-config')
+require('autoformat-config')
 require('colorizer').setup()
 require('nvim_comment').setup()
 

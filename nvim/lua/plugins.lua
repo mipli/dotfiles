@@ -23,7 +23,7 @@ return require('packer').startup({
         use 'tjdevries/express_line.nvim'
         use 'ryanoasis/vim-devicons'
         use 'kyazdani42/nvim-web-devicons'
-        use "sbdchd/neoformat"
+        use 'vim-autoformat/vim-autoformat'
 
         use 'folke/tokyonight.nvim'
         use 'norcalli/nvim-colorizer.lua'
