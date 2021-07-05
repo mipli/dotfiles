@@ -1,0 +1,33 @@
+anchor=top-right
+font=Noto Sans 10
+background-color=#81a1c1
+text-color=#2e3440
+progress-color=over #88c0d0
+margin=15
+padding=5
+border-size=1
+border-radius=2
+border-color=#5e81ac
+default-timeout=4000
+max-visible=4
+layer=overlay
+group-by=summary
+icon-path=/usr/share/icons/Test:/usr/share/icons/Adwaita
+max-icon-size=33
+
+[hidden]
+background-color=#bfbfbfff
+format=+ %h
+font=Noto Sans Bold 8
+
+[urgency=high]
+background-color=#bf616a
+ignore-timeout=true
+default-timeout=0
+
+[!expiring]
+background-color=#555555ff
+text-color=#eeeeeeff
+
+[grouped]
+format=<span font='7'>%a</span>\n(%g) <b>%s</b>\n%b
