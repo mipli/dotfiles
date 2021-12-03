@@ -14,6 +14,7 @@ b.tabstop = 4
 b.smartindent = true
 b.modeline = false
 
+o.inccommand = "split"
 o.backspace = [[indent,eol,start]]
 o.hidden = true
 w.winfixwidth = true
