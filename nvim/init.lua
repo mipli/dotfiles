@@ -30,9 +30,9 @@ w.relativenumber = true
 
 w.list = true
 if vim.fn.has('multi_byte') == 1 and vim.o.encoding == 'utf-8' then
-    o.listchars = [[tab:▸ ,extends:❯,precedes:❮,nbsp:±,trail:…]]
+  o.listchars = [[tab:▸ ,extends:❯,precedes:❮,nbsp:±,trail:…]]
 else
-    o.listchars = [[tab:> ,extends:>,precedes:<,nbsp:.,trail:_]]
+  o.listchars = [[tab:> ,extends:>,precedes:<,nbsp:.,trail:_]]
 end
 
 w.colorcolumn = [[100]]
@@ -74,6 +74,7 @@ require('treesitter-config')
 require('autoformat-config')
 require('colorizer').setup()
 require('nvim_comment').setup()
+require('dart')
 
 vim.cmd [[let $NVIM_TUI_ENABLE_TRUE_COLOR=1]]
 vim.cmd [[let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1]]
@@ -82,7 +83,7 @@ vim.cmd [[set background=dark]]
 vim.cmd [[colorscheme tokyonight]]
 
 utils.create_augroup({
-    {'FileType', '*', 'setlocal', 'shiftwidth=4'},
-    {'FileType', 'lua', 'setlocal', 'shiftwidth=2'},
-    {'BufNewFile,BufReadPost', '*.md', 'set', 'filetype=markdown'}
+  {'FileType', '*', 'setlocal', 'shiftwidth=4'},
+  {'FileType', 'lua', 'setlocal', 'shiftwidth=2'},
+  {'BufNewFile,BufReadPost', '*.md', 'set', 'filetype=markdown'}
 }, 'Base')

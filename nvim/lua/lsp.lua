@@ -51,7 +51,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local servers = { 'html', 'cssls', 'jsonls', 'pyright', 'ccls' }
+local servers = { 'html', 'cssls', 'jsonls', 'pyright', 'ccls', 'dartls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     capabilities=capabilities,
