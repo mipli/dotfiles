@@ -1,90 +1,101 @@
-local o = vim.o
-local w = vim.wo
-local b = vim.bo
+local utils = require("utils")
 
-local utils = require('utils')
+vim.g.mapleader = " "
 
-vim.g.mapleader = ' '
+vim.opt.autoindent = true
+vim.opt.expandtab = true
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.smartindent = true
+vim.opt.modeline = false
 
-b.autoindent = true
-b.expandtab = true
-b.softtabstop = 4
-b.shiftwidth = 4
-b.tabstop = 4
-b.smartindent = true
-b.modeline = false
+vim.opt.inccommand = "split"
+vim.opt.backspace = [[indent,eol,start]]
+vim.opt.hidden = true
+vim.opt.winfixwidth = true
 
-o.inccommand = "split"
-o.backspace = [[indent,eol,start]]
-o.hidden = true
-w.winfixwidth = true
+vim.opt.lazyredraw = true
 
-o.lazyredraw = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
 
-o.splitbelow = true
-o.splitright = true
+vim.opt.synmaxcol = 4000
 
-b.synmaxcol = 4000
+vim.opt.number = true
+vim.opt.relativenumber = true
 
-w.number = true
-w.relativenumber = true
+vim.opt.list = true
+vim.opt.listchars = [[tab:▸ ,extends:❯,precedes:❮,nbsp:±,trail:…]]
 
-w.list = true
-if vim.fn.has('multi_byte') == 1 and vim.o.encoding == 'utf-8' then
-  o.listchars = [[tab:▸ ,extends:❯,precedes:❮,nbsp:±,trail:…]]
-else
-  o.listchars = [[tab:> ,extends:>,precedes:<,nbsp:.,trail:_]]
+vim.opt.colorcolumn = [[100]]
+vim.opt.wrap = false
+vim.opt.signcolumn = "yes:1"
+
+vim.opt.termguicolors = true
+
+vim.opt.clipboard = [[unnamed,unnamedplus]]
+
+vim.opt.scrolloff = 4
+
+vim.opt.timeoutlen = 300
+
+vim.opt.mouse = "a"
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = [[nvim_treesitter#foldexpr()]]
+vim.opt.foldlevel = 2
+
+if vim.opt.shell == "fish$" then
+	vim.opt.shell = [[/bin/bash]]
 end
 
-w.colorcolumn = [[100]]
-w.wrap = false
-w.signcolumn = "yes:1"
-
-o.termguicolors = true
-
-o.clipboard = [[unnamed,unnamedplus]]
-
-o.scrolloff = 4
-
-o.timeoutlen = 300
-
-o.mouse = 'a'
-
-w.foldmethod = 'expr'
-w.foldexpr = [[nvim_treesitter#foldexpr()]]
-w.foldlevel = 2
-
-if o.shell == 'fish$' then o.shell = [[/bin/bash]] end
-
-o.completeopt = [[menuone,noinsert,noselect]]
+vim.opt.completeopt = [[menuone,noinsert,noselect]]
+vim.opt.shortmess = vim.o.shortmess .. "c"
 
 -- Nice menu when typing `:find *.py`
-o.wildmode = [[longest,list,full]]
-o.wildmenu = true
+vim.opt.wildmode = [[longest,list,full]]
+vim.opt.wildmenu = true
 -- Ignore files
-o.wildignore = [[*.pyc,**/coverage/*,**/node_modules/*,**/.git/*]]
+vim.opt.wildignore = [[*.pyc,**/coverage/*,**/node_modules/*,**/.git/*]]
 
-require('plugins')
-require('statusline')
-require('lsp')
-require('lspkind').init()
-require('mappings')
-require('gitsigns-config')
-require('telescope-config')
-require('treesitter-config')
-require('autoformat-config')
-require('colorizer').setup()
-require('nvim_comment').setup()
-require('dart')
+require("plugins")
+-- require('statusline')
+require("lsp_conf")
+require("cmp_conf")
+require("lspkind").init()
+require("mappings")
+require("gitsigns-config")
+require("telescope-config")
+require("treesitter-config")
+require("colorizer").setup()
+require("nvim_comment").setup()
+require("trouble").setup({
+	use_diagnostic_signs = true,
+})
+require("dart")
+require("lualine").setup({
+	options = {
+		-- ... your lualine config
+		theme = "nightfox",
+	},
+})
+require("wk_conf")
 
-vim.cmd [[let $NVIM_TUI_ENABLE_TRUE_COLOR=1]]
-vim.cmd [[let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1]]
+require("indent_blankline").setup({
+	show_end_of_line = true,
+	show_current_context = true,
+	show_current_context_start = true,
+})
 
-vim.cmd [[set background=dark]]
-vim.cmd [[colorscheme tokyonight]]
+vim.cmd([[let $NVIM_TUI_ENABLE_TRUE_COLOR=1]])
+vim.cmd([[let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1]])
+
+vim.cmd([[set background=dark]])
+vim.cmd([[colorscheme nightfox]])
 
 utils.create_augroup({
-  {'FileType', '*', 'setlocal', 'shiftwidth=4'},
-  {'FileType', 'lua', 'setlocal', 'shiftwidth=2'},
-  {'BufNewFile,BufReadPost', '*.md', 'set', 'filetype=markdown'}
-}, 'Base')
+	{ "FileType", "*", "setlocal", "shiftwidth=4" },
+	{ "FileType", "lua", "setlocal", "shiftwidth=2" },
+	{ "BufNewFile,BufReadPost", "*.md", "set", "filetype=markdown" },
+}, "Base")
