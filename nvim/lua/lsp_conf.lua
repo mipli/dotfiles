@@ -16,7 +16,7 @@ require("rust-tools").setup({
 		autoSetHints = true,
 		inlay_hints = {
 			hover_with_actions = true,
-			only_current_line = false,
+			only_current_line = true,
 			show_parameter_hints = true,
 			parameter_hints_prefix = "",
 			other_hints_prefix = "",
@@ -60,7 +60,7 @@ require("rust-tools").setup({
 					runBuildScripts = true,
 				},
 				procMacro = {
-					enable = true,
+					enable = false,
 				},
 				lens = {
 					enable = true,
@@ -126,9 +126,9 @@ for _, lsp in ipairs(servers) do
 end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	underline = true,
+	underline = false,
 	update_in_insert = true,
-	virtual_text = false,
+	virtual_text = true,
 	signs = true,
 })
 
@@ -143,11 +143,10 @@ end
 vim.diagnostic.config({
 	severity_sort = true,
 })
-
 require("null-ls").setup({
 	debug = true,
 	sources = {
-		require("null-ls").builtins.formatting.dart_format,
+		require("null-ls").builtins.formatting.black.with({}),
 		require("null-ls").builtins.formatting.stylua,
 		require("null-ls").builtins.diagnostics.eslint,
 		-- require("null-ls").builtins.completion.aspell,

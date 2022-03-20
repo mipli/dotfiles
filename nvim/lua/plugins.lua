@@ -5,6 +5,8 @@ return require("packer").startup({
 		-- Packer can manage itself
 		use("wbthomason/packer.nvim")
 
+		use("simnalamburt/vim-mundo")
+
 		use("editorconfig/editorconfig-vim")
 
 		use({
@@ -32,6 +34,7 @@ return require("packer").startup({
 		use("folke/which-key.nvim")
 
 		use("folke/tokyonight.nvim")
+		use("rebelot/kanagawa.nvim")
 		use("EdenEast/nightfox.nvim")
 		use("norcalli/nvim-colorizer.lua")
 
@@ -61,6 +64,17 @@ return require("packer").startup({
 		use("simrat39/rust-tools.nvim") -- To enable more of the features of rust-analyzer, such as inlay hints and more!
 
 		use("hrsh7th/vim-vsnip") -- Snippet engine
+
+		use({
+			"folke/zen-mode.nvim",
+			config = function()
+				require("zen-mode").setup({
+					-- your configuration comes here
+					-- or leave it empty to use the default settings
+					-- refer to the configuration section below
+				})
+			end,
+		})
 	end,
 	config = {
 		display = {

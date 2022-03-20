@@ -2,6 +2,8 @@ local utils = require("utils")
 
 vim.g.mapleader = " "
 
+vim.opt.laststatus = 3
+
 vim.opt.autoindent = true
 vim.opt.expandtab = true
 vim.opt.softtabstop = 4
@@ -92,10 +94,8 @@ vim.cmd([[let $NVIM_TUI_ENABLE_TRUE_COLOR=1]])
 vim.cmd([[let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1]])
 
 vim.cmd([[set background=dark]])
-vim.cmd([[colorscheme nightfox]])
+vim.cmd([[colorscheme kanagawa]])
 
 utils.create_augroup({
-	{ "FileType", "*", "setlocal", "shiftwidth=4" },
-	{ "FileType", "lua", "setlocal", "shiftwidth=2" },
 	{ "BufNewFile,BufReadPost", "*.md", "set", "filetype=markdown" },
 }, "Base")
