@@ -2,6 +2,8 @@
 exec mako
 output * bg ~/.dotfiles/wallpapers/nord-man-city.jpg fill
 
+exec wl-paste -t text --watch clipman store --no-persist
+
 ### Variables
 set $mod Mod4
 set $left h
@@ -54,28 +56,27 @@ client.unfocused        $black    $black     $gray   $black     $blue
 client.urgent           $lred     $black     $gray   $lred      $lblue
 
 ### Assignment
-assign [class="Slack"] → $ws4
-assign [class="Riot"] → $ws4
-assign [class="Postman"] → $ws7
+#assign [class="Slack"] → $ws0
+#assign [app_id="telegramdesktop"] → $ws0
 
-assign [class="illnotes"] → $ws1
-assign [instance="Navigator"] → $ws2
-assign [class="Thunderbird"] → $ws6
-assign [class="KeeWeb"] → $ws10
-
-# IntelliJ
-assign [class="jetbrains-idea" title="(.*)IntelliJ IDEA"] → $ws3
-assign [class="sun-awt-X11-XFramePeer" class="jetbrains-idea"] → $ws3
-assign [class="sun-awt-X11-XWindowPeer" class="java-lang-Thread"] → $ws3
-for_window [class="sun-awt-X11-XWindowPeer" class="java-lang-Thread"] floating enable
-for_window [class="jetbrains-idea" title="(.*)Default Changelist"] fullscreen enable
-
+### Floating
+#for_window [window_role="pop-up"] floating enable
+#for_window [window_role="bubble"] floating enable
+#for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+#for_window [window_type="menu"] floating enable
+#for_window [window_role="About"] floating enable
+for_window [class="bevy"] floating enable
+for_window [class="demesne"] floating enable
+for_window [title="[Ee]mulator"] floating enable
 
 ### Key bindings
 # Quick launchers
 bindsym $mod+Return exec $term
 bindsym $mod+G exec wofi --show run 
 bindsym $mod+x exec "swaylock -c 000000"
+bindsym $mod+C exec clipman pick -t wofi
 
 # Kill focused window
 bindsym $mod+Shift+a kill
