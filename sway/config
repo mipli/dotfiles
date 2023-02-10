@@ -70,6 +70,8 @@ for_window [window_type="dialog"] floating enable
 for_window [class="bevy"] floating enable
 for_window [class="demesne"] floating enable
 for_window [title="[Ee]mulator"] floating enable
+for_window [title="- Genymotion"] floating enable
+# for_window [title="VBA-M"] border normal
 
 ### Key bindings
 # Quick launchers
