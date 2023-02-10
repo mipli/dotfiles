@@ -11,11 +11,6 @@ warning_bg = "#3b4252"
 critical_bg = "#3b4252"
 
 [[block]]
-block = "watson"
-show_time = true
-state_path = "/home/michael/.config/watson/state"
-
-[[block]]
 block = "pacman"
 interval = 10
 
@@ -51,4 +46,5 @@ sway_kb_identifier = "1:1:AT_Translated_Set_2_keyboard"
 [[block]]
 block = "battery"
 interval = 10
-format = "{percentage}%"
+driver = "upower"
+format = "{percentage}"
