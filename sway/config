@@ -2,7 +2,11 @@
 exec mako
 output * bg ~/.dotfiles/wallpapers/nord-man-city.jpg fill
 
+# exec swaybar
 exec wl-paste -t text --watch clipman store --no-persist
+
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
 
 ### Variables
 set $mod Mod4
@@ -13,19 +17,19 @@ set $right l
 set $term alacritty
 
 ### workspace naming 
-set $ws1 "Ⅰ"
-set $ws2 "Ⅱ"
-set $ws3 "Ⅲ"
-set $ws4 "Ⅳ"
-set $ws5 "Ⅴ"
-set $ws6 "Ⅵ"
-set $ws7 "Ⅶ"
-set $ws8 "Ⅷ"
-set $ws9 "Ⅸ"
-set $ws10 "Ⅹ"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "0"
 
-#set $dsp1 eDP-1
-set $dsp1 'Chimei Innolux Corporation 0x14B1 0x00000000'
+# Display info from: swaymsg -t get_outputs
+set $dsp1 'Chimei Innolux Corporation 0x14B1 Unknown'
 set $dsp2 'Eizo Nanao Corporation EV2736W 0x0000FFB6'
 output $dsp1 resolution 1920x1080 position 0,0
 output $dsp2 resolution 2560x1440 position 1921,0
@@ -49,18 +53,34 @@ set $lblue    #88c0d0
 set $white    #eceff4
 set $yellow   #ebcb8b
 
-# Color                 border    background text    indicator  child_border
-client.focused          $yellow   $blue      $gray   $yellow     $yellow
-client.focused_inactive $white    $black     $gray   $gray      $gray
-client.unfocused        $black    $black     $gray   $black     $blue
-client.urgent           $lred     $black     $gray   $lred      $lblue
+### Kanagawa Palette
+set $oldWhite     #C8C093
+set $sumiInk1     #1F1F28
+set $sumiInk3     #363646
+set $sumiInk4     #54546D
+set $autumnGreen  #76946A
+set $winterGreen  #2B3328
+set $samuraiRed   #E82424
+set $waveBlue2    #2D4F67
+
+# # Color                 border    background text    indicator  child_border
+# client.focused          $yellow   $blue      $gray   $yellow     $yellow
+# client.focused_inactive $white    $black     $gray   $gray      $gray
+# client.unfocused        $black    $black     $gray   $black     $blue
+# client.urgent           $lred     $black     $gray   $lred      $lblue
+
+# Color                 border          background     text        indicator       child_border
+client.focused          $autumnGreen    $sumiInk1     $sumiInk4    $autumnGreen    $autumnGreen
+client.focused_inactive $winterGreen    $sumiInk1     $sumiInk4    $sumiInk4       $winterGreen 
+client.unfocused        $sumiInk1       $sumiInk1     $sumiInk4    $sumiInk1       $waveBlue2
+client.urgent           $samuraiRed     $sumiInk1     $sumiInk4    $samuraiRed     $waveBlue2
 
 ### Assignment
 #assign [class="Slack"] → $ws0
 #assign [app_id="telegramdesktop"] → $ws0
 
 ### Floating
-#for_window [window_role="pop-up"] floating enable
+for_window [window_role="pop-up"] floating enable
 #for_window [window_role="bubble"] floating enable
 #for_window [window_role="task_dialog"] floating enable
 for_window [window_role="Preferences"] floating enable
@@ -214,15 +234,22 @@ bar {
     height 18
     status_command /usr/bin/i3status-rs
     colors {
-        separator #eceff4
-        background #3b4252
-        statusline #434c5e
-        focused_workspace #81a1c1 #81a1c1 #eceff4
-        active_workspace #8fbcbb #8fbcbb #eceff4
-        inactive_workspace #4c566a #4c566a  #eceff4
-        urgent_workspace #bf616a #bf616a #ffffff
+        separator $samuraiRed
+        background $sumiInk3
+        statusline $waveBlue2
+
+        #                    border        background    text
+        focused_workspace    $autumnGreen  $sumiInk3     $oldWhite
+        active_workspace     $winterGreen  $sumiInk3     $oldWhite
+        inactive_workspace   $sumiInk3     $sumiInk3     $oldWhite
+        urgent_workspace     $sumiInk3     $sumiInk3     $oldWhite
     }
 }
+
+# bar {
+#     position top
+#     status_command waybar
+# }
 
 # Gtk theme
 set $gnome-schema org.gnome.desktop.interface

@@ -1,14 +1,21 @@
 [icons]  
-name = "awesome5"
+icons = "material-nf"
 
 [theme]
-name = "space-villain"
+theme= "nord-dark"
+
 [theme.overrides]
-idle_bg = "#3b4252"
-info_bg = "#3b4252"
-good_bg = "#3b4252"
-warning_bg = "#3b4252"
-critical_bg = "#3b4252"
+idle_bg = "#363646"
+idle_fg = "#C8C093"
+
+info_bg =  "#76946A"
+info_fg =  "#C8C093"
+
+warning_bg = "#2D4F67"
+warning_fg = "#E46876"
+
+critical_bg = "#2D4F67"
+critical_fg = "#FF5D62"
 
 [[block]]
 block = "pacman"
@@ -25,26 +32,25 @@ interval = 5
 
 [[block]]
 block = "memory"
-format_mem = "{mem_used_percents}%"
+format = "$icon $mem_total_used_percents.eng(w:2)"
 interval = 5
 
 [[block]]
 block = "sound"
-format = "♫ {volume}"
+driver= "pulseaudio"
+format = "$icon {$volume.eng(w:2) |}"
 
 [[block]]
 block = "time"
 interval = 60
-format = "%a %d-%m | %R"
 
 [[block]]
 block = "keyboard_layout"
 driver = "sway"
 sway_kb_identifier = "1:1:AT_Translated_Set_2_keyboard"
 
-
 [[block]]
 block = "battery"
-interval = 10
 driver = "upower"
-format = "{percentage}"
+device = "DisplayDevice"
+format = "$icon $percentage {$time |}"
