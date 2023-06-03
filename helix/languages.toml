@@ -1,0 +1,23 @@
+[[language]]
+name="rust"
+
+[language.config.rust]
+inlayHints.closureReturnTypeHints.enable = "with_block"
+inlayHints.discriminantHints.enable = "fieldless"
+
+inlayHints.lifetimeElisionHints.enable = "skip_trivial"
+inlayHints.typeHints.hideClosureInitialization = false
+
+
+[[language]]
+name = "python"
+formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = true
+
+[[language]]
+name = "elixir"
+auto-format = true
+
+[[language]]
+name = "bash"
+file-types = ["config"] # sway config file name
